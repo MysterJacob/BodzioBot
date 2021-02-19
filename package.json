@@ -1,0 +1,21 @@
+{
+  "name": "bodziobot",
+  "version": "0.1.0",
+  "description": "Nowy ulepszony system dla mojego serwera klasowego, jest on 2 wersją bota DemoBot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    "Discord"
+  ],
+  "author": "Myster",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
