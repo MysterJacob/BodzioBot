@@ -3,7 +3,8 @@ const PATH_TO_GUILDS_CONFIG = "./guild_configs/"
 module.exports.createGuildConfig= (GuildID)=>{
     const path = PATH_TO_GUILDS_CONFIG+GuildID+".json";
     if(!fs.existsSync(path)){
-        fs.writeFileSync(path,"{}");
+        const template = fs.readFileSync(PATH_TO_GUILDS_CONFIG+"template.json");
+        fs.writeFileSync(path,template);
     }
 }
 module.exports.getGuildConfig= (GuildID)=>{
@@ -16,14 +17,14 @@ module.exports.getGuildConfig= (GuildID)=>{
         return {};
     }
 }
-module.exports.getGuildConfig= (GuildID,value)=>{
+module.exports.getGuildConfigKey = (GuildID,Key)=>{
     const path = PATH_TO_GUILDS_CONFIG+GuildID+".json";
     if(fs.existsSync(path)){
-        const configValue = JSON.parse(fs.readFileSync(path))[value];
+        const configValue = JSON.parse(fs.readFileSync(path))[Key];
         return configValue;
     }else{
         this.createGuildConfig(GuildID);
-        return undefined;
+        return this.getGuildConfigKey(GuildID,Key);
     }
 }
 module.exports.setGuildConfigKey=(GuildID,key,value)=>{
