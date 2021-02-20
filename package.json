@@ -16,6 +16,7 @@
   "author": "Myster",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "eslint": "^7.20.0"
   }
 }
