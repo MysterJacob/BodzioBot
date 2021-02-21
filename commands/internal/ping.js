@@ -4,7 +4,7 @@ module.exports.run = (msg,Flags,Parameters,bot)=>{
 
 module.exports.config ={
     name:"ping",
-    permissions:0,
+    permissions:111111,
     parameters:{},
     flags:{"l":{"type":"number"}}
 }

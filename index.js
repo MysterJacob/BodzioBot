@@ -9,7 +9,7 @@ intents.add('GUILD_MEMBERS');
 const botClient = new discord.Client({ ws: {intents: intents} })
 //Config.json
 const config = JSON.parse(fs.readFileSync("./config.json"))
-
+botClient.config = config;
 //Load modules
 function loadModules(){
     botClient.modules = new discord.Collection()
@@ -74,6 +74,10 @@ botClient.on("message",msg=>{
     const guild = msg.guild;
     const channel = msg.channel;
     const author = msg.author;
+    const member = msg.member;
+    const userPermissions = botClient.modules.get("user-permissions");
+
+
     const guildConfigs = botClient.modules.get("guilds-config");
     const guildPrefix = guildConfigs.getGuildConfigKey(guild.id,"prefix");
     if(content.startsWith(guildPrefix)){
@@ -92,7 +96,10 @@ botClient.on("message",msg=>{
             const parsed = commandParser.parse(commandConfig.parameters,commandConfig.flags,args,guild);
             //{flags:{array:{}},parameters:{array:{}},error:{code:0,message:"",index:-1}}
             const error = parsed.error;
+
             if(error.code != 0){
+                logger.print(`Parsing error with command ${commandName} requested by ${author.tag}`);
+                logger.print(`Error code ${error.code}:${error.message}`);
                 const errorEmbed = new discord.MessageEmbed();
                 errorEmbed.setTitle("Parser error");
                 errorEmbed.setTimestamp(new Date());
@@ -110,6 +117,18 @@ botClient.on("message",msg=>{
                 errorEmbed.addField(msg.content,pointer);
                 channel.send(errorEmbed);
             }else{
+                logger.print(`Parsing success with command ${commandName} requested by ${author.tag}, checking perms...`);
+                
+                const commandPermissions = command.config.permissions
+                const userperms = userPermissions.getPermissions(member,guild,botClient)
+                logger.print(`${author.tag} perms ${parseInt(userperms,2)}, needed ${parseInt(commandPermissions,2)}`);
+                if(userPermissions.matchPerms(userperms,commandPermissions)){
+                    logger.print(`Command ${commandName} run, requested by ${author.tag} `);
+                    command.run(msg,parsed.flags,parsed.parameters,botClient);
+                }else{
+                    logger.print(`Command ${commandName} not run, user ${author.tag} doesn't have permissions!`);
+                    msg.reply("You have no valid permissions to do that!");
+                }
                 //Execute the command!
             }
         }

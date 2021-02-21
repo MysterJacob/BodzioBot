@@ -3,5 +3,8 @@
     "channels":{
         "meetingLinks":"",
         "school":{}
-    }   
+    },
+    "roles":{
+        "moderator":""
+    }
 }
