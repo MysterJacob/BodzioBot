@@ -68,7 +68,8 @@ botClient.on('ready', ()=>{
 
 //On message
 botClient.on('message',async msg=>{
-
+    if(msg.channel.type == "dm" || msg.author.bot)
+        return;
     const content = msg.content;
     
     const guild = msg.guild;
@@ -78,7 +79,15 @@ botClient.on('message',async msg=>{
     const userPermissions = botClient.modules.get('user-permissions');
     const guildConfigs = botClient.modules.get('guilds-config');
     const guildPrefix = guildConfigs.getGuildConfigKey(guild.id,'prefix');
-    author.discriminator
+    const guildChannels = guildConfigs.getGuildConfigKey(guild.id,'channels');
+    //cLinks 
+    if(channel.id == guildChannels.meetingLinks){
+        botClient.modules.get('clinks-veryfier').checkLink(msg);
+    }
+
+
+
+
     if(content.startsWith(guildPrefix)){
         logger.print(content);
         const withoutprefix = content.slice(guildPrefix.length);

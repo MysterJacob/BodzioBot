@@ -8,7 +8,7 @@ It has(will have) basic implementation of modules for basic task:
 - Task managment.
 - Time managment.
 - Fast-Planning.
-- Faster and ~~cheating on exams~~ better learning;
+- Easier and better ~~cheating on exams~~ learning;
 
 ## Basic
 - Prefix /
@@ -21,7 +21,10 @@ It has(will have) basic implementation of modules for basic task:
 - Help
 - CrateTask
 - Rep,+Rep,-Rep
+- User Card
+- rr
 - Schedule
+
 
 ## WIP 
 ## DONE
@@ -33,12 +36,13 @@ It has(will have) basic implementation of modules for basic task:
 
 ## Planned
 - API
-- Links veryfier
+
 - Reputation
 
 ## WIP 
 
 ## DONE
+- Links veryfier
 - logger
 - guild-config
 - command-parser
