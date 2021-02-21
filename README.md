@@ -4,13 +4,11 @@
 ###### Reveal date 22.02.2021 10:00
 ## Desc
 Bodzio Bot is bot created especially e-learning
-It has(will have) basic modules
-BodzioBot jest botem dla mojego serwera klasowego, klasy 1TI2 gr.B
-Posiada on podstawową implementacje najpotrzebniejszych funkcji do: 
---Podziału obowiążków.
---Zarządzania czasem.
---Planowania.
---Sybszego i sprawniejszego odrabiania lekcji.
+It has(will have) basic implementation of modules for basic task:
+- Task managment.
+- Time managment.
+- Fast-Planning.
+- Faster and ~~cheating on exams~~ better learning;
 
 ## Basic
 - Prefix /
