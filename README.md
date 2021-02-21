@@ -1,7 +1,7 @@
 # BodzioBot
 
 
-##Opis
+## Opis
 BodzioBot jest botem dla mojego serwera klasowego, klasy 1TI2 gr.B
 Posiada on podstawową implementacje najpotrzebniejszych funkcji do 
 --Podziału obowiążków
@@ -9,21 +9,21 @@ Posiada on podstawową implementacje najpotrzebniejszych funkcji do
 --Planowania
 --Sybszego i sprawniejszego odrabiania lekcji.
 
-##Podstawowe
+## Podstawowe
 Prefix /
 Flagi / lub -
 Dzielenie parametrów 
 
-#Komendy
+# Komendy
 
-##Planned
--Timer
--Help
--Ping
--CrateTask
--Rep,+Rep,-Rep
+## Planned
+- Timer
+- Help
+- Ping
+- CrateTask
+- Rep,+Rep,-Rep
 
-##WIP 
--Ping
+## WIP 
+- Ping
 
-##DONE
+## DONE
