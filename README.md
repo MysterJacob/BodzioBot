@@ -3,6 +3,8 @@
 ###### Run date 24.02.2021 20:00
 ###### Reveal date 22.02.2021 10:00
 ## Desc
+Bodzio Bot is bot created especially e-learning
+It has(will have) basic modules
 BodzioBot jest botem dla mojego serwera klasowego, klasy 1TI2 gr.B
 Posiada on podstawową implementacje najpotrzebniejszych funkcji do: 
 --Podziału obowiążków.
@@ -10,7 +12,7 @@ Posiada on podstawową implementacje najpotrzebniejszych funkcji do:
 --Planowania.
 --Sybszego i sprawniejszego odrabiania lekcji.
 
-## Podstawowe
+## Basic
 - Prefix /
 - Flags / lub -
 - Parameter spliting \s
@@ -23,12 +25,12 @@ Posiada on podstawową implementacje najpotrzebniejszych funkcji do:
 - Ping
 - CrateTask
 - Rep,+Rep,-Rep
-- Perms
+
 
 ## WIP 
-- Ping
-
 ## DONE
+- Ping
+- Perms
 
 # Modules
 
@@ -38,12 +40,12 @@ Posiada on podstawową implementacje najpotrzebniejszych funkcji do:
 - Reputation
 
 ## WIP 
-- user-permissions
 
 ## DONE
 - logger
 - guild-config
 - command-parser
+- user-permissions
 
 
 # Permissions

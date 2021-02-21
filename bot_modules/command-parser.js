@@ -1,41 +1,42 @@
-const logger = require("../bot_modules/logger")(__filename);
+const logger = require('../bot_modules/logger')(__filename);
 module.exports.parseArgument = async (type,Input,guild)=>{
-    let parsed = {output:"",error:{code:0,message:""}}
+    let parsed = {output:'',error:{code:0,message:''}}
     switch(type.toLowerCase()){
-        case "string":
+        case 'string':
             parsed.output = Input.toString();
             break;
-        case "number":
+        case 'number':
             let numb = Input;
             try{
                 numb = parseInt(numb);
             }catch(E){
                 parsed.error.code = 1;
-                parsed.error.message = "Argument isn't type of int";
+                parsed.error.message = 'Argument isn\'t type of int';
             }
             parsed.output = numb;
             break;
-        case "member":
+        case 'member':
                 Input = Input.toString();
                 logger.print(Input);
                 if(Input.length == 18){
                     //By id
                     try{
-                        const member = await guild.members.fetch({Input, force: true });
+                        const member = await guild.members.fetch(Input);
                         parsed.output = member;
                     }catch(e){
                         parsed.error.code = 2;
-                        parsed.error.message = "Couldn't find member!";
+                        parsed.error.message = 'Couldn\'t find member!';
                     }
-                }else if(Input.startsWith("<@")){
+                }else if(Input.startsWith('<@')){
                     //By ping
                     try{
-                        const userID = Input.slice(3,17);
-                        const member = await guild.members.fetch({userID, force: true });
+                        const userID = Input.slice(3,21);
+                        logger.print(userID);
+                        const member = await guild.members.fetch(userID);
                         parsed.output = member;
                     }catch(e){
                         parsed.error.code = 2;
-                        parsed.error.message = "Couldn't find member!";
+                        parsed.error.message = 'Couldn\'t find member!';
                     }
                     
                 }else{
@@ -45,28 +46,28 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                         parsed.output = user;
                     }else{
                         parsed.error.code = 2;
-                        parsed.error.message = "Couldn't find member!";
+                        parsed.error.message = 'Couldn\'t find member!';
                     }
                 }
             break;
-        case "time":
-            if(Input.includes(":")){
-                const splited = Input.split(":");
+        case 'time':
+            if(Input.includes(':')){
+                const splited = Input.split(':');
                 const hours = splited[0];
                 const minutes = splited[1];
                 if(hours > 23){
                     parsed.error.code = 4;
-                    parsed.error.message = "Too much hours!";
+                    parsed.error.message = 'Too much hours!';
                 }
                 if(minutes > 59){
                     parsed.error.code = 5;
-                    parsed.error.message = "Too much minutes!";
+                    parsed.error.message = 'Too much minutes!';
                 }
                 if(splited.length >= 3){
                     const seconds = splited[2];
                     if(seconds > 59){
                         parsed.error.code = 6;
-                        parsed.error.message = "Too much seconds!";
+                        parsed.error.message = 'Too much seconds!';
                     }
                     parsed.output = {hours:hours,minute:minutes,seconds:seconds}
                 }else{
@@ -75,7 +76,7 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                 
             }else{
                 parsed.error.code = 3;
-                parsed.error.message = "Wrong hour format!";
+                parsed.error.message = 'Wrong hour format!';
             }
             break;
 
@@ -87,22 +88,22 @@ module.exports.parse = async (aParameters,aFlags,Input,guild)=>{
     var parsed = new Object(
     {flags:{array:{},
     //Functions
-    isSet:(name)=>{return (name in parsed.flags.array);}
-    ,get:(name)=>{return parsed.flags.array.get(name);
-    }},parameters:{array:{},
+    isSet:(name)=>{return (name in parsed.flags.array);},
+    get:(name)=>{return parsed.flags.array.get(name);}
+    },parameters:{array:{},
     isSet:(name)=>{name in parsed.parameters.array},
-    get:(name)=>{}
-    },error:{code:0,message:"",index:-1}});
+    get:(name)=>{return parsed.parameters.array[name];}
+    },error:{code:0,message:'',index:-1}});
     let parameterIndex =0;
     for(let i =0;i<Input.length;i++){
         const arg = Input[i];
         //Flag or parameter
-        if(arg.startsWith("/") || arg.startsWith("-")){
+        if(arg.startsWith('/') || arg.startsWith('-')){
             //Flag
             const flagName = arg.slice(1);
             if(flagName in aFlags){
                 const aFlag = aFlags[flagName];
-                if(aFlag.type == "boolean"){
+                if(aFlag.type == 'boolean'){
                     parsed.flags.array[flagName] = true;
                 }else{
                     if(Input.length >= i +1){
@@ -162,5 +163,5 @@ module.exports.parse = async (aParameters,aFlags,Input,guild)=>{
     return parsed
 }
 module.exports.config ={
-    name:"command-parser"
+    name:'command-parser'
 }
