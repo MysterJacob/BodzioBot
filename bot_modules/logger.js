@@ -20,9 +20,9 @@ module.exports = function(attachedModule){
         if(seconds <=9){
             seconds = "0" + seconds
         } 
-
+        
         const time = hour+":"+minute+":"+seconds
-        console.log("["+time+"]["+filename+"]"+message);
+        console.log("["+time+"]["+filename+"]"+message.toString());
     }
     returned.error = function(message){
         const date = new Date()

@@ -29,6 +29,7 @@ function loadModules(){
         }
     })
 }
+
 //Load commands
 function loadCommands(){
     botClient.commands = new discord.Collection();
@@ -67,13 +68,18 @@ botClient.on("ready", ()=>{
 })
 //On message
 botClient.on("message",msg=>{
+
     const content = msg.content;
+    logger.print(content);
     const guild = msg.guild;
+    const channel = msg.channel;
     const author = msg.author;
     const guildConfigs = botClient.modules.get("guilds-config");
     const guildPrefix = guildConfigs.getGuildConfigKey(guild.id,"prefix");
     if(content.startsWith(guildPrefix)){
-        const commandName = content.slice(guildPrefix.length);
+        const splited =  content.slice(guildPrefix.length).split(" ");
+        const commandName =splited[0];
+        const args = splited.slice(1);
         logger.print(`${author.tag} requested executing command ${commandName}`);
         const command = botClient.commands.get(commandName);
         if(command == undefined){
@@ -82,6 +88,30 @@ botClient.on("message",msg=>{
         }else{
             logger.print(`Parsing command ${commandName} requested by ${author.tag} `);
             const commandParser = botClient.modules.get("command-parser");
+            const commandConfig = command.config
+            const parsed = commandParser.parse(commandConfig.parameters,commandConfig.flags,args,guild);
+            //{flags:{array:{}},parameters:{array:{}},error:{code:0,message:"",index:-1}}
+            const error = parsed.error;
+            if(error.code != 0){
+                const errorEmbed = new discord.MessageEmbed();
+                errorEmbed.setTitle("Parser error");
+                errorEmbed.setTimestamp(new Date());
+                errorEmbed.setColor("#ff5b0f");
+                errorEmbed.setDescription("Error ocurred while parsing your command:\n\r "+
+                error.message);
+                const problematicArgumet = args[error.index];
+                let pointer = "";
+                for(let i=0;i<content.indexOf(problematicArgumet)+1;i++){
+                    pointer += "-";
+                }
+                for(let i=0;i<problematicArgumet.length;i++){
+                    pointer += "^";
+                }
+                errorEmbed.addField(msg.content,pointer);
+                channel.send(errorEmbed);
+            }else{
+                //Execute the command!
+            }
         }
     }
 })
