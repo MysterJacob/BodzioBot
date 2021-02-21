@@ -1,7 +1,6 @@
 //Modules 
-const discord = require('discord.js')
+const discord = require('discord.js');
 const fs = require('fs');
-const { log } = require('util');
 const logger = require('./bot_modules/logger')(__filename);
 //botClient
 const intents = new discord.Intents(discord.Intents.NON_PRIVILEGED);
@@ -137,7 +136,7 @@ botClient.on('message',async msg=>{
                             errorEmbed.setTitle('Execution error');
                             errorEmbed.setTimestamp(new Date());
                             errorEmbed.setColor('#ff5b0f');
-                            errorEmbed.setDescription(`Error ocurred while executing your command:\n\r ${commandName}`);
+                            errorEmbed.setDescription(`Error ocurred while executing your command:\n ${commandName}`);
                             errorEmbed.addField(`Error code:${ret.exitCode}`,ret.message);
                             errorEmbed.setThumbnail('https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png');
                             errorEmbed.setAuthor(botClient.user.tag);
@@ -148,7 +147,7 @@ botClient.on('message',async msg=>{
                         errorEmbed.setTitle('Internal error');
                         errorEmbed.setTimestamp(new Date());
                         errorEmbed.setColor('#ff5b0f');
-                        errorEmbed.setDescription(`Error ocurred while executing your command:${commandName}`);
+                        errorEmbed.setDescription(`Error ocurred while executing your command:${commandName}\n \`\`It's probably due to erro in bot modules or command,\nnot your fault.\`\``);
                         errorEmbed.setThumbnail('https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png');
                         errorEmbed.setAuthor(botClient.user.tag);
                         errorEmbed.addField(e.name,e.message);

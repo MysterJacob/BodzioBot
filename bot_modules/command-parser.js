@@ -1,6 +1,7 @@
 const logger = require('../bot_modules/logger')(__filename);
 module.exports.parseArgument = async (type,Input,guild)=>{
     let parsed = {output:'',error:{code:0,message:''}}
+    Input = Input.toString();
     switch(type.toLowerCase()){
         case 'string':
             parsed.output = Input.toString();
@@ -16,8 +17,6 @@ module.exports.parseArgument = async (type,Input,guild)=>{
             parsed.output = numb;
             break;
         case 'member':
-                Input = Input.toString();
-                logger.print(Input);
                 if(Input.length == 18){
                     //By id
                     try{
@@ -52,10 +51,12 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                 }
             break;
         case 'time':
-            if(Input.includes(':')){
+
+            if(Input.includes(':' )){
                 const splited = Input.split(':');
-                const hours = splited[0];
-                const minutes = splited[1];
+                const hours = parseInt(splited[0]);
+                const minutes = parseInt(splited[1]);
+                let seconds = 0;
                 if(hours > 23){
                     parsed.error.code = 4;
                     parsed.error.message = 'Too much hours!';
@@ -65,16 +66,13 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                     parsed.error.message = 'Too much minutes!';
                 }
                 if(splited.length >= 3){
-                    const seconds = splited[2];
+                    seconds = parseInt(splited[2]);
                     if(seconds > 59){
                         parsed.error.code = 6;
                         parsed.error.message = 'Too much seconds!';
                     }
-                    parsed.output = {hours:hours,minute:minutes,seconds:seconds}
-                }else{
-                    parsed.output = {hours:hours,minute:minutes}
                 }
-                
+                parsed.output = {hours:hours,minutes:minutes,seconds:seconds}
             }else{
                 parsed.error.code = 3;
                 parsed.error.message = 'Wrong hour format!';
@@ -116,7 +114,7 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
         }
     }
     //In case of error, juts flush
-    if(quoteOpen){
+    if(argBuffer != ""){
         Input.push(argBuffer); 
         argBuffer = ''
     }
@@ -127,7 +125,7 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
     logger.print(`Pre-parsed to ${Input}`);
     var parsed = {
         args:Input,
-        flags:{array:{},isSet:(name)=>{return (name in parsed.flags.array);},get:(name)=>{return parsed.flags.array.get(name);}},
+        flags:{array:{},isSet:(name)=>{return (name in parsed.flags.array);},get:(name)=>{return parsed.flags.array[name];}},
         parameters:{array:{},isSet:(name)=>{return (name in parsed.parameters.array)},get:(name)=>{return parsed.parameters.array[name]}},
         error:{code:0,message:'',index:-1}};
 
@@ -143,23 +141,25 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
         //Flag or parameter
         if(arg.startsWith('/') || arg.startsWith('-')){
             //Flag
-            const flagName = arg.slice(1);
+            const flagName = arg.slice(1).replace(' ','');
             if(flagName in aFlags){
                 const aFlag = aFlags[flagName];
                 if(aFlag.type == 'boolean'){
+                    //Boolean
                     parsed.flags.array[flagName] = true;
                 }else{
+                    //Value like
                     if(Input.length >= i +1){
                         i++;
-                        const parsedData = this.parseArgument(aFlag.type,Input[i],guild);
+                        const parsedData = await this.parseArgument(aFlag.type,Input[i],guild);
+
                         if(parsedData.error.code != 0){
                             parsed.error.code = 5;
-                            parsed.error.message = `Flag \`\`${flagName}\`\` not typeof \`\`${aFlag.type}\`\``;
+                            parsed.error.message = `Flag \`\`${flagName}\`\` not typeof \`\`${aFlag.type}\`\`\nCode ${parsedData.error.code}:${parsedData.error.message} \n`;
                             parsed.error.index = i; 
                             return parsed;
                         }
-                        const value = parsed.output;
-                        parsed.flags.array[flagName] = value;
+                        parsed.flags.array[flagName] = parsedData.output;
                     }else{
                         parsed.error.code = 2;
                         parsed.error.message = `No value specified to flag \`\`${flagName}\`\``;
@@ -185,7 +185,7 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
                 const parsedData = await this.parseArgument(param.type,arg,guild);
                 if(parsedData.error.code != 0){
                     parsed.error.code = 5;
-                    parsed.error.message = `Parameter \`\`${param.name}\`\` not typeof \`\`${param.type}\`\``;
+                    parsed.error.message = `Parameter \`\`${param.name}\`\` not typeof \`\`${param.type}\`\`\nCode ${parsedData.error.code}:${parsedData.error.message} \n`;
                     parsed.error.index = i; 
                 }
                 parsed.parameters.array[param.name] = parsedData.output;
