@@ -18,7 +18,6 @@ It has(will have) basic implementation of modules for basic task:
 # Commands
 
 ## Planned
-- Timer
 - Help
 - CrateTask
 - Rep,+Rep,-Rep
@@ -28,6 +27,7 @@ It has(will have) basic implementation of modules for basic task:
 ## DONE
 - Ping
 - Perms
+- Timer
 
 # Modules
 
@@ -53,3 +53,7 @@ It has(will have) basic implementation of modules for basic task:
 - 3 Administrator of bot.
 - 4 Owner of guild.
 - 5 Owner of bot.
+
+## Permssions level explained
+The permissons are converted to base 2 integer and then displayed as "level"
+(The normal is most significant bit.)

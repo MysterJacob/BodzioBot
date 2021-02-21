@@ -57,19 +57,27 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                 const hours = parseInt(splited[0]);
                 const minutes = parseInt(splited[1]);
                 let seconds = 0;
-                if(hours > 23){
+                if(hours < 0){
                     parsed.error.code = 4;
-                    parsed.error.message = 'Too much hours!';
+                    parsed.error.message = 'Not enough hours!';
                 }
                 if(minutes > 59){
                     parsed.error.code = 5;
                     parsed.error.message = 'Too much minutes!';
+                }
+                if(minutes < 0){
+                    parsed.error.code = 4;
+                    parsed.error.message = 'Not enough minutes!';
                 }
                 if(splited.length >= 3){
                     seconds = parseInt(splited[2]);
                     if(seconds > 59){
                         parsed.error.code = 6;
                         parsed.error.message = 'Too much seconds!';
+                    }
+                    if(seconds < 0){
+                        parsed.error.code = 4;
+                        parsed.error.message = 'Not enough seconds!';
                     }
                 }
                 parsed.output = {hours:hours,minutes:minutes,seconds:seconds}
