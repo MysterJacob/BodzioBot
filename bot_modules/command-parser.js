@@ -41,9 +41,10 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                     
                 }else{
                     //By name 
-                    const member = guild.members.cache.find(m=>m.tag == Input || m.username == Input || m.discriminator == Input);
+                    const members = await guild.members.fetch();
+                    const member = members.find(m=>m.nickname == Input ||m.user.tag == Input || m.user.username == Input || m.user.discriminator == Input);
                     if(member != undefined){
-                        parsed.output = user;
+                        parsed.output = member;
                     }else{
                         parsed.error.code = 2;
                         parsed.error.message = 'Couldn\'t find member!';
@@ -83,17 +84,59 @@ module.exports.parseArgument = async (type,Input,guild)=>{
     }
     return parsed;
 }
-module.exports.parse = async (aParameters,aFlags,Input,guild)=>{
-    logger.print(`Parsing input ${Input}`);
-    var parsed = new Object(
-    {flags:{array:{},
-    //Functions
-    isSet:(name)=>{return (name in parsed.flags.array);},
-    get:(name)=>{return parsed.flags.array.get(name);}
-    },parameters:{array:{},
-    isSet:(name)=>{name in parsed.parameters.array},
-    get:(name)=>{return parsed.parameters.array[name];}
-    },error:{code:0,message:'',index:-1}});
+module.exports.parse = async (aParameters,aFlags,args,guild)=>{
+    logger.print(`Parsing input ${args}`);
+
+
+
+    let Input = [];
+    let argBuffer = ""
+    let quoteOpen = false;
+    for(let i =0;i<args.length;i++){
+        const char=args.charAt(i);
+
+        switch(char){
+            case '"':
+                quoteOpen = !quoteOpen;
+                if(!quoteOpen){
+                    Input.push(argBuffer);
+                    argBuffer = '' 
+                }
+                break;
+            case ' ':
+                argBuffer += char;
+                if(!quoteOpen){    
+                    Input.push(argBuffer); 
+                    argBuffer = ''
+                }
+                break;
+            default:
+                argBuffer += char;
+                break;
+        }
+    }
+    //In case of error, juts flush
+    if(quoteOpen){
+        Input.push(argBuffer); 
+        argBuffer = ''
+    }
+    
+    //Remove command name
+    Input = Input.slice(1);
+    
+    logger.print(`Pre-parsed to ${Input}`);
+    var parsed = {
+        args:Input,
+        flags:{array:{},isSet:(name)=>{return (name in parsed.flags.array);},get:(name)=>{return parsed.flags.array.get(name);}},
+        parameters:{array:{},isSet:(name)=>{return (name in parsed.parameters.array)},get:(name)=>{return parsed.parameters.array[name]}},
+        error:{code:0,message:'',index:-1}};
+
+    if(quoteOpen){
+        parsed.error.code = 9;
+        parsed.error.message = `The quote (\`\`"\`\`) was not closed.`;
+        parsed.error.index = 0; 
+        return parsed;
+    }
     let parameterIndex =0;
     for(let i =0;i<Input.length;i++){
         const arg = Input[i];

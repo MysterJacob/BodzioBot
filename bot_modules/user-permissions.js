@@ -1,5 +1,7 @@
+const logger = require("./logger");
+
 module.exports.getPermissions = (Member,guild,bot)=>{
-    let perms = '0';
+    let perms = '1';
     const guildsConfig = bot.modules.get('guilds-config');
     const guildRoles = guildsConfig.getGuildConfigKey(guild.id,'roles');
     const moderator = guildRoles.moderator;
@@ -8,10 +10,10 @@ module.exports.getPermissions = (Member,guild,bot)=>{
     perms += Member.roles.cache.has(moderator) ? '1' : '0';
     //Admin of guild 
     perms += Member.hasPermission('ADMINISTRATOR') ? '1' : '0';
-    //Admin of bot
-    perms += bot.config.bot.AdminsIDs.includes(Member.user.id) ? '1' : '0';
+    //Admin of bot FIX
+    perms += (bot.config.bot.AdminsIDs.includes(Member.user.id)) ? '1' : '0';
     //Owner of guild
-    perms += (guild.OwnerID == Member.user.id) ? '1' : '0';
+    perms += (guild.ownerID == Member.id) ? '1' : '0';
     //Owner of bot
     perms += (Member.user.id == '330768055468818435') ? '1' : '0';
     return perms;

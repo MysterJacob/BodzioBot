@@ -20,10 +20,9 @@ It has(will have) basic implementation of modules for basic task:
 ## Planned
 - Timer
 - Help
-- Ping
 - CrateTask
 - Rep,+Rep,-Rep
-
+- Schedule
 
 ## WIP 
 ## DONE

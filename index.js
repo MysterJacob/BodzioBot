@@ -79,11 +79,13 @@ botClient.on('message',async msg=>{
     const userPermissions = botClient.modules.get('user-permissions');
     const guildConfigs = botClient.modules.get('guilds-config');
     const guildPrefix = guildConfigs.getGuildConfigKey(guild.id,'prefix');
+    author.discriminator
     if(content.startsWith(guildPrefix)){
         logger.print(content);
-        const splited =  content.slice(guildPrefix.length).split(' ');
+        const withoutprefix = content.slice(guildPrefix.length);
+        const splited =  withoutprefix.split(' ');
         const commandName =splited[0];
-        const args = splited.slice(1);
+        
         logger.print(`${author.tag} requested executing command ${commandName}`);
         const command = botClient.commands.get(commandName);
         if(command == undefined){
@@ -93,7 +95,8 @@ botClient.on('message',async msg=>{
             logger.print(`Parsing command ${commandName} requested by ${author.tag} `);
             const commandParser = botClient.modules.get('command-parser');
             const commandConfig = command.config
-            const parsed = await commandParser.parse(commandConfig.parameters,commandConfig.flags,args,guild);
+            const parsed = await commandParser.parse(commandConfig.parameters,commandConfig.flags,withoutprefix,guild);
+            const args = parsed.args;
             //{flags:{array:{}},parameters:{array:{}},error:{code:0,message:'',index:-1}}
             const error = parsed.error;
 
