@@ -10,9 +10,9 @@ Posiada on podstawową implementacje najpotrzebniejszych funkcji do
 --Sybszego i sprawniejszego odrabiania lekcji.
 
 ## Podstawowe
-Prefix /
-Flagi / lub -
-Dzielenie parametrów 
+- Prefix /
+- Flagi / lub -
+- Dzielenie parametrów 
 
 # Komendy
 
