@@ -1,5 +1,5 @@
 const logger = require("../bot_modules/logger")(__filename);
-module.exports.parseArgument = (type,Input,guild)=>{
+module.exports.parseArgument = async (type,Input,guild)=>{
     let parsed = {output:"",error:{code:0,message:""}}
     switch(type.toLowerCase()){
         case "string":
@@ -16,14 +16,30 @@ module.exports.parseArgument = (type,Input,guild)=>{
             parsed.output = numb;
             break;
         case "member":
+                Input = Input.toString();
+                logger.print(Input);
                 if(Input.length == 18){
                     //By id
-                    const member = guild.members.fetch(Input);
-                    parsed.output = member;
+                    try{
+                        const member = await guild.members.fetch({Input, force: true });
+                        parsed.output = member;
+                    }catch(e){
+                        parsed.error.code = 2;
+                        parsed.error.message = "Couldn't find member!";
+                    }
                 }else if(Input.startsWith("<@")){
-                    const member = guild.members.fetch(Input.slice(3,17));
-                    parsed.output = member;
+                    //By ping
+                    try{
+                        const userID = Input.slice(3,17);
+                        const member = await guild.members.fetch({userID, force: true });
+                        parsed.output = member;
+                    }catch(e){
+                        parsed.error.code = 2;
+                        parsed.error.message = "Couldn't find member!";
+                    }
+                    
                 }else{
+                    //By name 
                     const member = guild.members.cache.find(m=>m.tag == Input || m.username == Input || m.discriminator == Input);
                     if(member != undefined){
                         parsed.output = user;
@@ -31,7 +47,6 @@ module.exports.parseArgument = (type,Input,guild)=>{
                         parsed.error.code = 2;
                         parsed.error.message = "Couldn't find member!";
                     }
-                    
                 }
             break;
         case "time":
@@ -67,17 +82,18 @@ module.exports.parseArgument = (type,Input,guild)=>{
     }
     return parsed;
 }
-module.exports.parse = (aParameters,aFlags,Input,guild)=>{
+module.exports.parse = async (aParameters,aFlags,Input,guild)=>{
     logger.print(`Parsing input ${Input}`);
-    var parsed = {flags:{array:{}},parameters:{array:{}},error:{code:0,message:"",index:-1}}
+    var parsed = new Object(
+    {flags:{array:{},
     //Functions
-    parsed.flags.isSet = (name)=>{
-        return this.flags.array.includes(name);
-    }
-    parsed.flags.get = (name)=>{
-        return this.flags.array.get(name);
-    }
-
+    isSet:(name)=>{return (name in parsed.flags.array);}
+    ,get:(name)=>{return parsed.flags.array.get(name);
+    }},parameters:{array:{},
+    isSet:(name)=>{name in parsed.parameters.array},
+    get:(name)=>{}
+    },error:{code:0,message:"",index:-1}});
+    let parameterIndex =0;
     for(let i =0;i<Input.length;i++){
         const arg = Input[i];
         //Flag or parameter
@@ -115,6 +131,32 @@ module.exports.parse = (aParameters,aFlags,Input,guild)=>{
             }
         }else{
             //Parameter
+            
+            if(aParameters.length <= parameterIndex){
+                parsed.error.code = 6;
+                parsed.error.message = `Undefined parameter \`\`${arg}\`\``;
+                parsed.error.index = i;
+            }else{
+                const param = aParameters[parameterIndex];
+                const parsedData = await this.parseArgument(param.type,arg,guild);
+                if(parsedData.error.code != 0){
+                    parsed.error.code = 5;
+                    parsed.error.message = `Parameter \`\`${param.name}\`\` not typeof \`\`${param.type}\`\``;
+                    parsed.error.index = i; 
+                }
+                parsed.parameters.array[param.name] = parsedData.output;
+                parameterIndex++;
+            }
+            
+        }
+    }
+    for(let i =parameterIndex;i<aParameters.length;i++){
+        const param = aParameters[i];
+        if(param.optional == false){
+            parsed.error.code = 8;
+            parsed.error.message = `Parameter \`\`${param.name}\`\` was not provided!`;
+            parsed.error.index = parameterIndex;
+            return parsed;
         }
     }
     return parsed

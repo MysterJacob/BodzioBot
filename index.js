@@ -66,8 +66,9 @@ botClient.on("ready", ()=>{
     logger.print("Bot is up and running")
     
 })
+
 //On message
-botClient.on("message",msg=>{
+botClient.on("message",async msg=>{
 
     const content = msg.content;
     logger.print(content);
@@ -76,8 +77,6 @@ botClient.on("message",msg=>{
     const author = msg.author;
     const member = msg.member;
     const userPermissions = botClient.modules.get("user-permissions");
-
-
     const guildConfigs = botClient.modules.get("guilds-config");
     const guildPrefix = guildConfigs.getGuildConfigKey(guild.id,"prefix");
     if(content.startsWith(guildPrefix)){
@@ -93,7 +92,7 @@ botClient.on("message",msg=>{
             logger.print(`Parsing command ${commandName} requested by ${author.tag} `);
             const commandParser = botClient.modules.get("command-parser");
             const commandConfig = command.config
-            const parsed = commandParser.parse(commandConfig.parameters,commandConfig.flags,args,guild);
+            const parsed = await commandParser.parse(commandConfig.parameters,commandConfig.flags,args,guild);
             //{flags:{array:{}},parameters:{array:{}},error:{code:0,message:"",index:-1}}
             const error = parsed.error;
 
@@ -106,10 +105,12 @@ botClient.on("message",msg=>{
                 errorEmbed.setColor("#ff5b0f");
                 errorEmbed.setDescription("Error ocurred while parsing your command:\n\r "+
                 error.message);
+                errorEmbed.setAuthor(botClient.user.tag);
+                errorEmbed.setThumbnail("https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png");
                 const problematicArgumet = args[error.index];
                 let pointer = "";
-                for(let i=0;i<content.indexOf(problematicArgumet)+1;i++){
-                    pointer += "-";
+                for(let i=1;i<content.indexOf(problematicArgumet);i++){
+                    pointer += "- ";
                 }
                 for(let i=0;i<problematicArgumet.length;i++){
                     pointer += "^";
@@ -124,10 +125,21 @@ botClient.on("message",msg=>{
                 logger.print(`${author.tag} perms ${parseInt(userperms,2)}, needed ${parseInt(commandPermissions,2)}`);
                 if(userPermissions.matchPerms(userperms,commandPermissions)){
                     logger.print(`Command ${commandName} run, requested by ${author.tag} `);
-                    command.run(msg,parsed.flags,parsed.parameters,botClient);
+                    const initialRet = {exitCode:0,message:""};
+                    const ret = command.run(msg,parsed.flags,parsed.parameters,botClient,initialRet);
+                    if(ret.exitCode != 0){
+                        const errorEmbed = new discord.MessageEmbed();
+                        errorEmbed.setTitle("Execution error");
+                        errorEmbed.setTimestamp(new Date());
+                        errorEmbed.setColor("#ff5b0f");
+                        errorEmbed.setDescription(`Error ocurred while executing your command:\n\r ${commandName}`);
+                        errorEmbed.addField(`Error code:${ret.exitCode}`,ret.message);
+                        errorEmbed.setThumbnail("https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png");
+                        errorEmbed.setAuthor(botClient.user.tag);
+                    }
                 }else{
                     logger.print(`Command ${commandName} not run, user ${author.tag} doesn't have permissions!`);
-                    msg.reply("You have no valid permissions to do that!");
+                     msg.reply("You have no valid permissions to do that!");
                 }
                 //Execute the command!
             }

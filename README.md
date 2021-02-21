@@ -1,13 +1,13 @@
 # BodzioBot
 
-###### Reveal date 24.02.2021 20:00
-
+###### Run date 24.02.2021 20:00
+###### Reveal date 22.02.2021 10:00
 ## Desc
 BodzioBot jest botem dla mojego serwera klasowego, klasy 1TI2 gr.B
-Posiada on podstawową implementacje najpotrzebniejszych funkcji do 
---Podziału obowiążków
---Zarządzania czasem
---Planowania
+Posiada on podstawową implementacje najpotrzebniejszych funkcji do: 
+--Podziału obowiążków.
+--Zarządzania czasem.
+--Planowania.
 --Sybszego i sprawniejszego odrabiania lekcji.
 
 ## Podstawowe

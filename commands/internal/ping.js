@@ -1,10 +1,15 @@
-module.exports.run = (msg,Flags,Parameters,bot)=>{
-        msg.reply(Flags.get("l"));
+module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+    if(Flags.isSet("l")){
+        msg.channel.send("Your ping is `" + `${Date.now() - msg.createdTimestamp}` + " ms`🏓")
+    }else{
+        msg.reply("Pong🏓")
+    }
+    return ret;
 }
 
 module.exports.config ={
     name:"ping",
-    permissions:111111,
-    parameters:{},
-    flags:{"l":{"type":"number"}}
+    permissions:"111111",
+    parameters:[],
+    flags:{"l":{"type":"boolean"}}
 }
