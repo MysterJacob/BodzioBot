@@ -73,11 +73,13 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 
         //Cancel
         collector.on('end', (collected, reason) => {
-            usersWithTimers = usersWithTimers.splice(msg.author.id);
-            clearInterval(timerID);
-            embed.setTitle("Your timer has been canceled.");
-            msg.channel.send(embed);
-            m.delete();
+            if(reason != 'messageDelete'){
+                usersWithTimers = usersWithTimers.splice(msg.author.id);
+                clearInterval(timerID);
+                embed.setTitle("Your timer has been canceled.");
+                msg.channel.send(embed);
+                m.delete();
+            }  
         });  
     });
     return ret;

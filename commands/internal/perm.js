@@ -5,7 +5,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     if(!Parameters.isSet('member')){
         member = msg.member;
     }
-
+    const userData = bot.modules.get('users-data');
     const guild = msg.guild;
     const userPermissions = bot.modules.get('user-permissions');
     const embed = new discord.MessageEmbed();

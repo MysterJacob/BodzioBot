@@ -56,6 +56,10 @@ It has(will have) basic implementation of modules for basic task:
 - 4 Owner of guild.
 - 5 Owner of bot.
 
+
 ## Permssions level explained
 The permissons are converted to base 2 integer and then displayed as "level"
 (The normal is most significant bit.)
+
+# Known bugs 
+- Timer going minus if less than 5 is supplied.

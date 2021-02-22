@@ -10,9 +10,13 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 
     userPlaying.push(msg.author.id);
 
-
-    const options = [':skull:',':arrow_down_small:',':up:']
+    const optionsColors = {':skull:':'#ff0000',':arrow_down_small:':'#8f004c',':up:':'#fff200',':blue_square:':'#00ccff'}
+    const options = [':skull:',':arrow_down_small:',':up:',':blue_square:']
     let bar = [':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:'];
+    for(let i =0;i<bar.length;i++){
+        const randomIndex = Math.round(Math.random() * (options.length-1));
+        bar[i]=options[randomIndex];
+    }
     const embed = new discord.MessageEmbed();
     //Template
     const template = 
@@ -25,7 +29,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     embed.setColor('#05ff86');
     embed.setTimestamp(new Date());
     embed.setDescription(template.replace('<RANDOM>',bar.join('')));
-    let iterations = Math.round(Math.random() * (8))+2;
+    let iterations = Math.round(Math.random() * (3))+10;
 
     msg.channel.send(embed).then(m=>{
         var timerID = setInterval(()=>{
@@ -35,6 +39,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
             const randomIndex = Math.round(Math.random() * (options.length-1));
             bar.push(options[randomIndex]);
             embed.setDescription(template.replace('<RANDOM>',bar.join('')));
+            embed.setColor(optionsColors[bar[4]]);
             m.edit(embed);
             //End
             if(iterations <=0){
@@ -50,6 +55,9 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
                         break;
                     case options[2]:
                         embed.setDescription(`Upgrade time ${options[2]}`);
+                        break;
+                    case options[3]:
+                        embed.setDescription(`Nothing happened ${options[3]}`);
                         break;
                 }
                 m.edit(embed);
