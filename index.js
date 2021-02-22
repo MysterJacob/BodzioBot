@@ -32,6 +32,7 @@ function loadModules(){
 //Load commands
 function loadCommands(){
     botClient.commands = new discord.Collection();
+    botClient.categories = new discord.Collection();
     const PATH_TO_COMMANDS = './commands/';
     fs.readdir(PATH_TO_COMMANDS,(err,files)=>{
         if(err){
@@ -39,16 +40,20 @@ function loadCommands(){
         }else{
             files.forEach(category=>{
                 const pathtocategory = PATH_TO_COMMANDS + category+'/'
+                const descryption =fs.readFileSync(pathtocategory + 'description.txt');
+                botClient.categories.set(category,descryption);
                 fs.readdir(pathtocategory,(err,commands)=>{
                     if(err){
                         logger.error(err);
                     }else{
                         commands.forEach(file=>{
                             const filename = file.split('.')[0];
-                            const module = require(pathtocategory+filename);
-                            const modulename = module.config.name;
-                            module.category = category;
-                            botClient.commands.set(modulename,module);
+                            if(filename != 'description'){
+                                const module = require(pathtocategory+filename);
+                                const modulename = module.config.name;
+                                module.config.category = category;
+                                botClient.commands.set(modulename,module);
+                            }      
                         })
                     }
                 })
@@ -119,7 +124,7 @@ botClient.on('message',async msg=>{
                 error.message);
                 errorEmbed.setAuthor(botClient.user.tag);
                 errorEmbed.setThumbnail('https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png');
-                const problematicArgumet = args[error.index];
+                const problematicArgumet = args[error.index] || '   ';
                 let pointer = '';
                 for(let i=1;i<content.indexOf(problematicArgumet);i++){
                     pointer += '- ';

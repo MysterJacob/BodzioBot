@@ -32,6 +32,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 
 module.exports.config ={
     name:'perm',
+    desc:'Used to check users permissions',
     permissions:'111111',
     parameters:[{name:'member',type:'member',optional:true}],
     flags:{}

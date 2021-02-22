@@ -18,19 +18,17 @@ It has(will have) basic implementation of modules for basic task:
 # Commands
 
 ## Planned
-- Help
 - CrateTask
 - Rep,+Rep,-Rep
 - User Card
 - rr
 - Schedule
-
-
 ## WIP 
 ## DONE
 - Ping
 - Perms
 - Timer
+- Help
 
 # Modules
 

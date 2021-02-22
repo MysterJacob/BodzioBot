@@ -85,6 +85,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 
 module.exports.config ={
     name:'timer',
+    desc:'Counts down.',
     permissions:'111111',
     parameters:[{name:'time',type:'time',optional:false}],
     flags:{'n':{'type':'string'}}

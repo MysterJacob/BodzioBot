@@ -9,6 +9,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 
 module.exports.config ={
     name:'ping',
+    desc:'Used to check for services.',
     permissions:'111111',
     parameters:[],
     flags:{'l':{'type':'boolean'}}
