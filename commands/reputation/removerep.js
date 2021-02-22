@@ -6,7 +6,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     const giver = msg.member;
     const userData = bot.modules.get('users-data');
     const now = new Date();
-    const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id,'lastReputationInteraction')) || new Date(0);
+    const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id,'lastReputationInteraction')) || new Date(-100);
 
     const diffMs = now - lastReputationInteraction;
     const diffDays =Math.floor(diffMs / 86400000); // days
