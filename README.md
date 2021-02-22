@@ -21,9 +21,9 @@ It has(will have) basic implementation of modules for basic task:
 - CrateTask
 - Rep,+Rep,-Rep
 - User Card
-- rr
 - Schedule
 ## WIP 
+- rr
 ## DONE
 - Ping
 - Perms
@@ -35,9 +35,9 @@ It has(will have) basic implementation of modules for basic task:
 ## Planned
 - API
 
-- Reputation
 
 ## WIP 
+- Reputation
 
 ## DONE
 - Links veryfier
@@ -45,7 +45,7 @@ It has(will have) basic implementation of modules for basic task:
 - guild-config
 - command-parser
 - user-permissions
-
+- User data
 
 # Permissions
 ## Levels
