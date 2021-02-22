@@ -35,5 +35,5 @@ module.exports.setUserConfigKey=(UserID,key,value)=>{
 }
 
 module.exports.config ={
-    name:'Users-config'
+    name:'users-data'
 }

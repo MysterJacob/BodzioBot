@@ -54,7 +54,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
                 }
                 m.edit(embed);
             }
-        },1500)
+        },2000)
     })
     
     return ret;
