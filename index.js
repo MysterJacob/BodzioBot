@@ -73,6 +73,7 @@ botClient.on('ready', ()=>{
 
 //On message
 botClient.on('message',async msg=>{
+
     if(msg.channel.type == "dm" || msg.author.bot)
         return;
     const content = msg.content;

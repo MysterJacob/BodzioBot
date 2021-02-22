@@ -31,7 +31,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     const userRep = userData.getUserConfigKey(target.id,'reputation') || 0;
     const giverRep = userData.getUserConfigKey(giver.id,'reputation') || 0;
 
-    if(userRep >= giverRep){
+    if(giverRep >= userRep *0.9){
         const newRep = userReputation.reduceReputation(target.id,giver.id,bot);
         msg.reply(`Użytkownik ${target} ma teraz ${newRep} punktów reputacji.`);
     }else{

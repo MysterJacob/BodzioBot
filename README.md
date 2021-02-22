@@ -19,8 +19,6 @@ It has(will have) basic implementation of modules for basic task:
 
 ## Planned
 - CrateTask
-- Rep,+Rep,-Rep
-- User Card
 - Schedule
 ## WIP 
 - rr
@@ -29,6 +27,8 @@ It has(will have) basic implementation of modules for basic task:
 - Perms
 - Timer
 - Help
+- Rep,+Rep,-Rep
+- User Card
 
 # Modules
 
@@ -37,7 +37,7 @@ It has(will have) basic implementation of modules for basic task:
 
 
 ## WIP 
-- Reputation
+
 
 ## DONE
 - Links veryfier
@@ -46,6 +46,7 @@ It has(will have) basic implementation of modules for basic task:
 - command-parser
 - user-permissions
 - User data
+- Reputation
 
 # Permissions
 ## Levels
@@ -62,4 +63,4 @@ The permissons are converted to base 2 integer and then displayed as "level"
 (The normal is most significant bit.)
 
 # Known bugs 
-- Timer going minus if less than 5 is supplied.
+- Timer going negative if less than 5 is supplied.

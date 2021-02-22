@@ -2,7 +2,7 @@ const discord = require('discord.js');
 let userPlaying = [];
 module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 
-    if(msg.author.id in userPlaying){
+    if(userPlaying.includes(msg.author.id)){
         ret.exitCode = 1;
         ret.message = "You can play once at the time.";
         return ret;
@@ -25,7 +25,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     ':blue_square::blue_square::blue_square::blue_square::arrow_double_up::blue_square::blue_square::blue_square::blue_square:'
    
     //Initial
-    embed.setAuthor(bot.user.tag);
+    embed.setAuthor(msg.author.tag);
     embed.setColor('#05ff86');
     embed.setTimestamp(new Date());
     embed.setDescription(template.replace('<RANDOM>',bar.join('')));

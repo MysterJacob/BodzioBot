@@ -105,14 +105,14 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
             case '"':
                 quoteOpen = !quoteOpen;
                 if(!quoteOpen){
-                    Input.push(argBuffer);
+                    Input.push(argBuffer.replace(' ',''));
                     argBuffer = '' 
                 }
                 break;
             case ' ':
                 argBuffer += char;
                 if(!quoteOpen){    
-                    Input.push(argBuffer); 
+                    Input.push(argBuffer.replace(' ','')); 
                     argBuffer = ''
                 }
                 break;
@@ -123,7 +123,7 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
     }
     //In case of error, juts flush
     if(argBuffer != ""){
-        Input.push(argBuffer); 
+        Input.push(argBuffer.replace(' ','')); 
         argBuffer = ''
     }
     
