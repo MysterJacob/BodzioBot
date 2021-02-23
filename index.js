@@ -162,7 +162,7 @@ botClient.on('message',async msg=>{
                         errorEmbed.setTitle('Internal error');
                         errorEmbed.setTimestamp(new Date());
                         errorEmbed.setColor('#ff5b0f');
-                        errorEmbed.setDescription(`Error ocurred while executing your command:${commandName}\n \`\`It's probably due to erro in bot modules or command,\nnot your fault.\`\``);
+                        errorEmbed.setDescription(`Error ocurred while executing your command:${commandName}\n \`\`It's probably due to error in bot modules or command,\nnot your fault.\`\``);
                         errorEmbed.setThumbnail('https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png');
                         errorEmbed.setAuthor(botClient.user.tag);
                         errorEmbed.addField(e.name,e.message);

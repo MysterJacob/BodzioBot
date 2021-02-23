@@ -51,7 +51,7 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                 }
             break;
         case 'date':
-            if(Input.matches('([0-3][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9])')){
+            if(Input.match('([0-3][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9])')){
                 const splited = Input.split('/');
                 const day = splited[0];
                 const month = splited[1];
@@ -71,7 +71,7 @@ module.exports.parseArgument = async (type,Input,guild)=>{
             }
             break;
         case 'hour':
-            if(Input.matches('([0-2][0-9]:[0-5][0-9])')){
+            if(Input.match('([0-2][0-9]:[0-5][0-9])')){
                 const splited = Input.split(':');
                 const hours = splited[0];
                 const minutes = splited[1];
