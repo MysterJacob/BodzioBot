@@ -34,7 +34,8 @@ It has(will have) basic implementation of modules for basic task:
 
 ## Planned
 - API
-
+- Calendar
+- Money($,BTC, ETC and stuff)
 
 ## WIP 
 

@@ -50,6 +50,56 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                     }
                 }
             break;
+        case 'date':
+            if(Input.matches('([0-3][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9])')){
+                const splited = Input.split('/');
+                const day = splited[0];
+                const month = splited[1];
+                const year = splited[2];
+
+                const date = new Date();
+                date.setHours(00,00,00);
+                date.setDate(day);
+                date.setMonth(month);
+                date.setFullYear(year);
+                
+                parsed.output = date;
+
+            }else{
+                parsed.error.code = 5;
+                parsed.error.message = 'Wrong date format(dd/mm/yyyy).';
+            }
+            break;
+        case 'hour':
+            if(Input.matches('([0-2][0-9]:[0-5][0-9])')){
+                const splited = Input.split(':');
+                const hours = splited[0];
+                const minutes = splited[1];
+
+                if(hours>23){
+                    parsed.error.code = 5;
+                    parsed.error.message = 'Too much hours!';
+                }
+                if(hours < 0){
+                    parsed.error.code = 4;
+                    parsed.error.message = 'Not enough hours!';
+                }
+                if(minutes>59){
+                    parsed.error.code = 5;
+                    parsed.error.message = 'Too much minutes!';
+                }
+                if(minutes < 0){
+                    parsed.error.code = 4;
+                    parsed.error.message = 'Not enough minutes!';
+                }
+                const date = new Date();
+                date.setMinutes(minutes,hours,00);
+                parsed.output = date;
+            }else{
+                parsed.error.code = 6;
+                parsed.error.message = 'Wron hour format(hh:mm).';
+            }
+            break;
         case 'time':
 
             if(Input.includes(':' )){
@@ -105,7 +155,7 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
             case '"':
                 quoteOpen = !quoteOpen;
                 if(!quoteOpen){
-                    Input.push(argBuffer.replace(' ',''));
+                    Input.push(argBuffer);
                     argBuffer = '' 
                 }
                 break;

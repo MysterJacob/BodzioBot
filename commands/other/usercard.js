@@ -138,7 +138,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
 module.exports.config ={
     name:'card',
     desc:'Used to show user info.',
-    permissions:'011111',
+    permissions:'111111',
     parameters:[{name:'member',type:'member',optional:true}],
     flags:{'p':{type:'boolean'},'f':{type:'boolean'}}
 }
