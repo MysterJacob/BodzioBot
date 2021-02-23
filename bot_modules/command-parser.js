@@ -179,7 +179,7 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
     
     //Remove command name
     Input = Input.slice(1);
-    
+    console.log(Input);
     logger.print(`Pre-parsed to ${Input}`);
     var parsed = {
         args:Input,
