@@ -1,4 +1,4 @@
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
     let date = Parameters.get('date');
     date.setHours(0,0,0);
     if(Parameters.isSet('hour')){

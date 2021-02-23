@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const discord = require('discord.js');
 const { copyFileSync } = require('fs');
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     let member =Parameters.get('member');
     if(!Parameters.isSet('member')){
         member = msg.member;

@@ -1,5 +1,5 @@
 const discord = require('discord.js');
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     const embed = new discord.MessageEmbed();
     embed.setAuthor(bot.user.tag);
     embed.setColor('#0345fc');

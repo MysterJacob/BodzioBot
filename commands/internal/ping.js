@@ -1,4 +1,4 @@
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     if(Flags.isSet('l')){
         msg.channel.send('Your ping is `' + `${Date.now() - msg.createdTimestamp}` + ' ms`🏓')
     }else{

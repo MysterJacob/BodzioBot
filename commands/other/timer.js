@@ -1,6 +1,6 @@
 const discord = require('discord.js');
 let usersWithTimers = []
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     const authorID = msg.author.id;
     //No more timers.dll
     if(usersWithTimers.includes(authorID)){

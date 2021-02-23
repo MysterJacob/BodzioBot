@@ -145,7 +145,7 @@ botClient.on('message',async msg=>{
                     logger.print(`Command ${commandName} run, requested by ${author.tag} `);
                     const initialRet = {exitCode:0,message:''};
                     try{
-                        const ret = command.run(msg,parsed.flags,parsed.parameters,botClient,initialRet);
+                        const ret = await command.run(msg,parsed.flags,parsed.parameters,botClient,initialRet);
                         if(ret.exitCode != 0){
                             const errorEmbed = new discord.MessageEmbed();
                             errorEmbed.setTitle('Execution error');

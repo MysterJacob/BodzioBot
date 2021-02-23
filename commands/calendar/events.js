@@ -1,14 +1,18 @@
 const discord = require('discord.js');
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
+    const guild = msg.guild;
+    const calendarEvents = bot.modules.get('calendar-events');
+    const parser = bot.modules.get('command-parser');
     const now = new Date();
+
     const embed = new discord.MessageEmbed();
     embed.setColor('#4a8dff');
     embed.setTimestamp(now);
     if(Flags.isSet('a')){
-        embed.setTitle('All exercices');
-        const calendarEvents = bot.modules.get('calendar-events');
-        const exercices = calendarEvents.getAllTasks(msg.guild.id,bot);
-        exercices.forEach(e=>{
+        embed.setTitle('All Tasks');
+        
+        const exercices = calendarEvents.getAllTasks(guild.id,bot);
+        await Promise.all(exercices.map(async e=>{
             //overhaul
             const endDate = new Date(Date.parse(e.date));
             const name = e.name;
@@ -20,20 +24,24 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
             const formattedDate = `Date: ${endDate.getFullYear()}/${endDate.getMonth()}/${endDate.getDate()}(${daysOfTheWeek[endDate.getDay()]}) ${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`
             const formattedTimeToEvent = `Time left: ${days} days, ${hours} hours, ${minutes} minutes`;
             //Sub-tasks
-            const subTasks = '';
+            let subTasks = '';
 
-            e.subtasks.forEach(t=>{
+            await Promise.all( e.subtasks.map(async t=>{
                 const name = t.name;
-                const assigned = '';
-                t.assigned.forEach(a=>{
-                    
-                })
-            })
+                let assigned = 'Assigned:';
+                await Promise.all(t.assigned.map(async a=>{
+                    const parsedMember = await parser.parseArgument('member',a,guild);
+
+                    assigned+= parsedMember.output.user.tag;
+                }));
+                subTasks += `${name}\n ${assigned}\n`;
+            }));
 
             const fieldName = `${name}`;
-            const fieldValue= `\`\`${formattedDate}\n${formattedTimeToEvent}\`\``;
+            const fieldValue= `\`\`${formattedDate}\n${formattedTimeToEvent}\`\`\n${subTasks}`;
             embed.addField(fieldName,fieldValue)
-        });
+        }));
+        console.log('sent');
         msg.reply(embed);
     }else{
 

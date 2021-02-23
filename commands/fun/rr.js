@@ -1,6 +1,6 @@
 const discord = require('discord.js');
 let userPlaying = [];
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
 
     if(userPlaying.includes(msg.author.id)){
         ret.exitCode = 1;
