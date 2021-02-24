@@ -3,6 +3,7 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
     const calendarEvents = bot.modules.get('calendar-events');
     const author = msg.author;
     const guild = msg.guild;
+    const channel =msg.channel;
     let date =Parameters.get('date');
     date.setHours(0,0,0);
     const taskName = Parameters.get('name');
@@ -25,16 +26,47 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
         msg.reply('Now simply send the sub-task names, type ``END`` to stop.');
 
         const filter = m => m.author.id ==author.id;
-        const collector = msg.channel.createMessageCollector(filter, { time: 15000 });
+        const collector = msg.channel.createMessageCollector(filter, { time: 180000 });
     
         collector.on('collect', m => {
             const content = m.content
+            //If end
             if(content.toLowerCase() == 'end'){
                 taskID = calendarEvents.setTask(taskName,date,subtasks,guild.id,bot);
                 embed.setDescription(`Termin:${date.toString()}\n TaskID:${taskID}`);
                 em.edit(embed);
-                msg.reply('DONE');
+                for(let i= 0;i<subtasks.length;i++){
+                    const subtask = subtasks[i];
+                    const taskEmbed = new discord.MessageEmbed();
+                    taskEmbed.setTitle(subtask.name);
+                    taskEmbed.setTimestamp(new Date());
+                    taskEmbed.setDescription(`Assigned:`);
+
+                    channel.send(taskEmbed).then(async me=>{
+                        const taskIndex = i;
+                        //Await assigment
+                        await me.react('✅');
+                        const filter = (reaction, user) => {
+                            return ['✅'].includes(reaction.emoji.name);
+                        };
+                
+                        const collector = me.createReactionCollector(filter, {});
+                        collector.on('collect',(r)=>{
+                            //With out the bot
+                            const assignedUsers = r.users.cache.filter(x=>x!= 517422997548564480).array();
+                            taskEmbed.setDescription(`Assigned:${assignedUsers.join()}`);
+                            let assignedUserIDs = []
+                            assignedUsers.forEach(u=>{
+                                assignedUserIDs.push(u.id);
+                            })
+                            //Assign members
+                            calendarEvents.setAssignedMembers(guild.id,taskID,taskIndex,bot,assignedUserIDs)
+                            me.edit(taskEmbed);
+                        });
+                    });
+                }
             }else{ 
+                //Add subtasks
                 const prefix = (embed.fields.length+1).toString()+'.'
                 const taskName = m.content;     
                 const task = {name:prefix+taskName,assigned:[]};
@@ -43,6 +75,7 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
                 em.edit(embed);
                 subtasks.push(task);
             } 
+            //Delete messages
             m.delete();
         });
     });
@@ -52,7 +85,7 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
 module.exports.config ={
     name:'createtask',
     desc:'Used to create task',
-    permissions:'111111',
+    permissions:'000001',
     parameters:[{name:'name',type:'string',optional:false},{name:'date',type:'date',optional:false},{name:'hour',type:'hour',optional:true}],
     flags:{}
 }

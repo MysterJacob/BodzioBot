@@ -71,6 +71,9 @@ module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
            
         },5000);  
 
+        collector.on('collect',r=>{
+            
+        })
         //Cancel
         collector.on('end', (collected, reason) => {
             if(reason != 'messageDelete'){

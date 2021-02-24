@@ -179,7 +179,8 @@ module.exports.parse = async (aParameters,aFlags,args,guild)=>{
     
     //Remove command name
     Input = Input.slice(1);
-    console.log(Input);
+    //Remove only spaces
+    Input = Input.filter(i=>i != '' && i != ' ');
     logger.print(`Pre-parsed to ${Input}`);
     var parsed = {
         args:Input,
