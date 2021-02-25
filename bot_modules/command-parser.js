@@ -51,16 +51,16 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                 }
             break;
         case 'date':
-            if(Input.match('([0-3][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9])')){
+            if(Input.match('([0-3][0-9]\/[0-1][0-9]\/[0-9][0-9][0-9][0-9])')){
                 const splited = Input.split('/');
-                const day = splited[0];
-                const month = splited[1];
-                const year = splited[2];
+                const day = parseInt(splited[0]);
+                const month = parseInt(splited[1]);
+                const year = parseInt(splited[2]);
 
                 const date = new Date();
                 date.setHours(00,00,00);
                 date.setDate(day);
-                date.setMonth(month);
+                date.setMonth(month-1);
                 date.setFullYear(year);
                 
                 parsed.output = date;
@@ -93,7 +93,8 @@ module.exports.parseArgument = async (type,Input,guild)=>{
                     parsed.error.message = 'Not enough minutes!';
                 }
                 const date = new Date();
-                date.setMinutes(minutes,hours,00);
+                date.setHours(hours);
+                date.setMinutes(minutes,0,0);
                 parsed.output = date;
             }else{
                 parsed.error.code = 6;

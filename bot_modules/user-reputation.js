@@ -12,7 +12,7 @@ module.exports.removeReputation = (UserID,value,bot)=>{
     userData.setUserConfigKey(UserID,'reputation',userRep - value);
 }
 
-module.exports.c = (UserID,bot)=>{
+module.exports.getUserReputation = (UserID,bot)=>{
     const userData = bot.modules.get('users-data');
     let userRep = userData.getUserConfigKey(UserID,'reputation') || 0;
     return userRep;

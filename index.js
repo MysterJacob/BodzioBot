@@ -64,11 +64,16 @@ function loadCommands(){
 
 //Bot events
 loadModules();
+
 loadCommands();
 //On ready
-botClient.on('ready', ()=>{
+botClient.on('ready', async ()=>{
     logger.print('Bot is up and running')
-    
+    const calendarEvents =botClient.modules.get('calendar-events');
+    const allGuilds = await botClient.guilds.cache;
+    allGuilds.forEach(guild=>{
+        calendarEvents.registerLiveEventForGuild(guild.id,botClient);
+    });
 })
 
 //On message

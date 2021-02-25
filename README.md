@@ -1,6 +1,6 @@
 # BodzioBot
 
-###### Run date 24.02.2021 20:00
+###### Run date 27.02.2021 20:00
 ###### Reveal date 22.02.2021 10:00
 ## Desc
 Bodzio Bot is bot created especially e-learning
@@ -18,11 +18,12 @@ It has(will have) basic implementation of modules for basic task:
 # Commands
 
 ## Planned
-- CrateTask
+
 - Schedule
 ## WIP 
 - rr
 ## DONE
+- CrateTask
 - Ping
 - Perms
 - Timer
@@ -37,7 +38,6 @@ It has(will have) basic implementation of modules for basic task:
 - Money($,BTC, ETC and stuff)
 
 ## WIP 
-- Calendar
 
 ## DONE
 - Links veryfier

@@ -1,6 +1,7 @@
 const logger = require("../../bot_modules/logger");
 const discord = require('discord.js');
 module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
+    const userReputation = bot.modules.get('user-reputation');
     //Time out
     const target = Parameters.get('member');
     const giver = msg.member;
@@ -12,6 +13,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     const diffDays =Math.floor(diffMs / 86400000); // days
     const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
     const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+    
     if(diffMins < 30){
         const embed = new discord.MessageEmbed();
         embed.setAuthor('You need to wait more time');
@@ -25,20 +27,9 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     }
     userData.setUserConfigKey(giver.id,'lastReputationInteraction',now.toString());
     //Rep use
-    
-    const userReputation = bot.modules.get('user-reputation');
-    
-    const userRep = userData.getUserConfigKey(target.id,'reputation') || 0;
-    const giverRep = userData.getUserConfigKey(giver.id,'reputation') || 0;
-
-    if(giverRep >= userRep *0.9){
-        const newRep = userReputation.reduceReputation(target.id,giver.id,bot);
-        msg.reply(`Użytkownik ${target} ma teraz ${newRep} punktów reputacji.`);
-    }else{
-        ret.exitCode = 1;
-        ret.message = `You need to have at least ${userRep} reputation to do that!`;
-        return ret;
-    }
+     
+    const newRep = userReputation.reduceReputation(target.id,giver.id,bot);
+    msg.reply(`Użytkownik ${target} ma teraz ${newRep} punktów reputacji.`);
     return ret;
 }
 
