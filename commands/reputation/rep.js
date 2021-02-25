@@ -1,7 +1,7 @@
 const discord = require('discord.js');
-module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
-    let member =Parameters.get('member');
-    if(!Parameters.isSet('member')){
+module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
+    let member = Parameters.get('member');
+    if(!Parameters.isSet('member')) {
         member = msg.member;
     }
     const userReputation = bot.modules.get('user-reputation');
@@ -9,15 +9,15 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     embed.setColor('#6e0265') ;
     embed.setTitle(`Reputation of user ${member.user.tag.toString()}`);
     embed.setTimestamp(new Date());
-    embed.setAuthor(userReputation.getReputation(member.id,bot));
+    embed.setAuthor(userReputation.getReputation(member.id, bot));
     msg.reply(embed);
     return ret;
-}
+};
 
-module.exports.config ={
+module.exports.config = {
     name:'rep',
     desc:'Displays rp of member.',
     permissions:'111111',
-    parameters:[{name:'member',type:'member',optional:true}],
-    flags:{}
-}
+    parameters:[{ name:'member', type:'member', optional:true }],
+    flags:{},
+};

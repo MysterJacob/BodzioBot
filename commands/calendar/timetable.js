@@ -1,10 +1,10 @@
 const discord = require('discord.js');
-module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
+module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const guild = msg.guild;
     const now = new Date();
     const guildsConfig = bot.modules.get('guilds-config');
-    const timetable =guildsConfig.getGuildConfigKey(guild.id,"timetable");
-    const todayTimetable = timetable[now.getDay()-1];
+    const timetable = guildsConfig.getGuildConfigKey(guild.id, 'timetable');
+    const todayTimetable = timetable[now.getDay() - 1];
     const embed = new discord.MessageEmbed();
     embed.setTitle('Today\'s timetable');
     embed.setTimestamp(now);
@@ -35,25 +35,26 @@ module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
         const endingDate = new Date();
         endingDate.setHours(endingHour);
         endingDate.setMinutes(endingMinute);
-        
-        if(cDate > startingDate && cDate < endingDate){
-            const diffMs = endingDate -cDate;
-            const diffDays =Math.floor(diffMs / 86400000); // days
+
+        if(cDate > startingDate && cDate < endingDate) {
+            const diffMs = endingDate - cDate;
+            const diffDays = Math.floor(diffMs / 86400000); // days
             const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
             const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-            embed.addField('*'+lesson.time,lesson.name + `\n ${diffHrs} Hours and ${diffMins} minutes to end.`);
-            
-        }else{
-            embed.addField(lesson.time,lesson.name);
+            embed.addField('*' + lesson.time, lesson.name + `\n ${diffHrs} Hours and ${diffMins} minutes to end.`);
+
+        }
+        else{
+            embed.addField(lesson.time, lesson.name);
         }
     });
     msg.reply(embed);
     return ret;
-}
-module.exports.config ={
+};
+module.exports.config = {
     name:'timetable',
     desc:'Displays the timetable.',
     permissions:'111111',
     parameters:[],
-    flags:{}
-}
+    flags:{},
+};
