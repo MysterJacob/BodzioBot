@@ -48,6 +48,7 @@ module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
                 const finish = bar[4];
                 switch(finish){
                     case options[0]:
+                        msg.member.kick('JEBUT!');
                         embed.setDescription(`You are dead :) ${options[0]}`);
                         break;
                     case options[1]:

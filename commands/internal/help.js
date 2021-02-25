@@ -18,13 +18,22 @@ module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     }else{      
         const category = Parameters.get('category');
         const commands = bot.commands;
-        embed.setDescription('Command list for bot.');
+        embed.setDescription('Command list for bot. \n Parameters with ``?`` at the start is optiontal.');
         embed.setTitle(`Command list in category ${category}`);
         commands.keyArray().forEach(c=>{
             const commandName = c;
             const command = commands.get(c);
+            let fieldName = `${commandName}`;
+            command.config.parameters.forEach(parameter=>{
+                fieldName += ' [';
+                if(parameter.optional){
+                    fieldName += '?';
+                }
+                fieldName += `${parameter.name}:${parameter.type}`;
+                fieldName += ']';
+            });
             if(command.config.category == category.toString()){
-                embed.addField(commandName,command.config.desc)
+                embed.addField(fieldName,command.config.desc)
             }
         });
         msg.channel.send(embed);

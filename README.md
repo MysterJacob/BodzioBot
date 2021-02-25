@@ -18,7 +18,6 @@ It has(will have) basic implementation of modules for basic task:
 # Commands
 
 ## Planned
-
 - Schedule
 ## WIP 
 - rr

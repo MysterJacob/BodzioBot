@@ -86,7 +86,7 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
 module.exports.config ={
     name:'createtask',
     desc:'Used to create task',
-    permissions:'000001',
+    permissions:'111111',
     parameters:[{name:'name',type:'string',optional:false},{name:'date',type:'date',optional:false},{name:'hour',type:'hour',optional:true}],
     flags:{}
 }
