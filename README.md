@@ -18,7 +18,10 @@ It has(will have) basic implementation of modules for basic task:
 # Commands
 
 ## Planned
-- Schedule
+- Remove Task
+- Quotes(OTD)
+
+- Settigns
 ## WIP 
 - rr
 ## DONE
@@ -29,7 +32,7 @@ It has(will have) basic implementation of modules for basic task:
 - Help
 - Rep,+Rep,-Rep
 - User Card
-
+- Schedule
 # Modules
 
 ## Planned

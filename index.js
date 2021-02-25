@@ -82,7 +82,6 @@ botClient.on('message',async msg=>{
     if(msg.channel.type == "dm" || msg.author.bot)
         return;
     const content = msg.content;
-    
     const guild = msg.guild;
     const channel = msg.channel;
     const author = msg.author;
@@ -91,6 +90,12 @@ botClient.on('message',async msg=>{
     const guildConfigs = botClient.modules.get('guilds-config');
     const guildPrefix = guildConfigs.getGuildConfigKey(guild.id,'prefix');
     const guildChannels = guildConfigs.getGuildConfigKey(guild.id,'channels');
+    //If pinged
+    if(msg.mentions.members.some(m=>m.user.id == botClient.user.id)){
+        msg.reply(`You stupid, my prefix is \`\`${guildPrefix}\`\` here.`);
+    }
+
+
     //cLinks 
     if(channel.id == guildChannels.meetingLinks){
         botClient.modules.get('clinks-veryfier').checkLink(msg);
