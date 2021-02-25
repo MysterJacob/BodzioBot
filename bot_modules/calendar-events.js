@@ -41,7 +41,7 @@ module.exports.removeTask = (taskID,GuildID,bot)=>{
     //calendar.tasks.splice(taskIndex);
     guildsConfig.setGuildConfigKey(GuildID,'calendar',calendar);
 }
-module.exports.updateTask=(name,date,subtasks,GuildID,bot,TaskID)=>{
+module.exports.updateTask=(name,date,subtasks,TaskID,GuildID,bot)=>{
     //Get all
     const guildsConfig = bot.modules.get('guilds-config');
     const task = {name:name,date:date.toString(),subtasks:subtasks,id:TaskID};
@@ -54,15 +54,30 @@ module.exports.updateTask=(name,date,subtasks,GuildID,bot,TaskID)=>{
     //Save task
     guildsConfig.setGuildConfigKey(GuildID,'calendar',calendar);
 }
-module.exports.setAssignedMembers=(guildID,taskID,subtaskID,bot,IDs)=>{ 
+module.exports.setAssignedMembers=(guildID,taskID,subtaskID,IDs,bot)=>{ 
     //Get task
     const allTasks = this.getAllTasks(guildID,bot);
     const targetTask = allTasks.find(t=>t.id == taskID);
     //Set members
     targetTask.subtasks[subtaskID]["assigned"] = IDs;
     //Save
-    this.updateTask(targetTask.name,targetTask.date,targetTask.subtasks,guildID,bot,taskID);
+    this.updateTask(targetTask.name,targetTask.date,targetTask.subtasks,taskID,guildID,bot);
 }
+module.exports.setDoneMembers=(guildID,taskID,subtaskID,IDs,bot)=>{ 
+    //Get task
+    const allTasks = this.getAllTasks(guildID,bot);
+    const targetTask = allTasks.find(t=>t.id == taskID);
+    //Set members
+    targetTask.subtasks[subtaskID]["done"] = IDs;
+    //Save
+    this.updateTask(targetTask.name,targetTask.date,targetTask.subtasks,taskID,guildID,bot);
+}
+
+
+
+
+
+
 module.exports.getAllTasks=(GuildID,bot)=>{
     //Get all
     const guildsConfig = bot.modules.get('guilds-config');

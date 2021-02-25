@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "eslint": "^7.20.0"
+    "eslint": "^7.20.0",
+    "nodemon": "^2.0.7"
   }
 }

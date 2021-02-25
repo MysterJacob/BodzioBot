@@ -20,7 +20,6 @@ It has(will have) basic implementation of modules for basic task:
 ## Planned
 - Remove Task
 - Quotes(OTD)
-
 - Settigns
 ## WIP 
 - rr

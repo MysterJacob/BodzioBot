@@ -44,36 +44,69 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
                     taskEmbed.setDescription(`Assigned:`);
 
                     channel.send(taskEmbed).then(async me=>{
+                        let assigned = []
+                        let done = []
                         const taskIndex = i;
                         //Await assigment
                         
                         const filter = (reaction, user) => {
-                            return ['✅'].includes(reaction.emoji.name);
+                            return ['✅','⌛','❌'].includes(reaction.emoji.name);
                         };
-                        me.react('✅');
+                        
                         const collector = me.createReactionCollector(filter, {});
-                        collector.on('collect',(r)=>{
+                        collector.on('collect',(reaction,user)=>{
+                            
+                            //PaxyNN, you know 
+                            const emoji =reaction._emoji.name
                             //With out the bot
-                            const assignedUsers = r.users.cache.filter(x=>x!= 517422997548564480).array();
-                            taskEmbed.setDescription(`Assigned:${assignedUsers.join()}`);
-                            let assignedUserIDs = []
-                            assignedUsers.forEach(u=>{
-                                assignedUserIDs.push(u.id);
+                            if(user.id != 517422997548564480){
+                            
+                                switch(emoji){
+                                    case '✅':  
+                                        if(assigned.some(u=>u.id == user.id) && !done.some(u=>u.id == user.id)){
+                                            done.push(user);
+                                        }                                         
+                                        break;
+                                    case '⌛':
+                                        if( !assigned.some(u=>u.id == user.id)){
+                                            assigned.push(user);
+                                        }
+                                        break;
+                                       
+                                    case '❌':
+                                        if(assigned.some(u=>u.id == user.id)){
+                                            assigned.splice(assigned.indexOf(user),1);
+                                        }
+                                        break;
+                                }
+                            }
+                                                
+                            let assignedIDs = []
+                            let doneIDs = []
+                            assigned.forEach(u=>{
+                                assignedIDs.push(u.id);
+                            });
+                            done.forEach(u=>{
+                                doneIDs.push(u.id);
                             })
+                             
                             //Assign members
-                            console.log(taskIndex);
-                            calendarEvents.setAssignedMembers(guild.id,taskID,taskIndex,bot,assignedUserIDs);
-
+                            calendarEvents.setAssignedMembers(guild.id,taskID,taskIndex,assignedIDs,bot);
+                            //Done members
+                            calendarEvents.setDoneMembers(guild.id,taskID,taskIndex,doneIDs,bot);
+                            taskEmbed.setDescription(`Assigned:${assigned.join()} \n Done:${done.join()}`);
                             me.edit(taskEmbed);
-
                         });
+                        await me.react('⌛');
+                        await me.react('❌');
+                        await me.react('✅');   
                     });
                 }
             }else{ 
                 //Add subtasks
                 const prefix = (embed.fields.length+1).toString()+'.'
                 const taskName = m.content;     
-                const task = {name:prefix+taskName,assigned:[]};
+                const task = {name:prefix+taskName,assigned:[],done:[]};
                
                 embed.addField(prefix,taskName);
                 em.edit(embed);
