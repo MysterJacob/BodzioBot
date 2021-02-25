@@ -28,10 +28,11 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
         const filter = m => m.author.id ==author.id;
         const collector = msg.channel.createMessageCollector(filter, { time: 180000 });
     
-        collector.on('collect', m => {
+        const messageCollector = collector.on('collect', m => {
             const content = m.content
             //If end
             if(content.toLowerCase() == 'end'){
+                messageCollector.stop('FINISH');
                 taskID = calendarEvents.setTask(taskName,date,subtasks,guild.id,bot);
                 embed.setDescription(`Termin:${date.toString()}\n TaskID:${taskID}`);
                 em.edit(embed);
@@ -45,11 +46,11 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
                     channel.send(taskEmbed).then(async me=>{
                         const taskIndex = i;
                         //Await assigment
-                        await me.react('✅');
+                        
                         const filter = (reaction, user) => {
                             return ['✅'].includes(reaction.emoji.name);
                         };
-                
+                        me.react('✅');
                         const collector = me.createReactionCollector(filter, {});
                         collector.on('collect',(r)=>{
                             //With out the bot
@@ -60,9 +61,11 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
                                 assignedUserIDs.push(u.id);
                             })
                             //Assign members
-                            calendarEvents.setAssignedMembers(guild.id,taskID,taskIndex,bot,assignedUserIDs)
+                            console.log(taskIndex);
+                            calendarEvents.setAssignedMembers(guild.id,taskID,taskIndex,bot,assignedUserIDs);
+
                             me.edit(taskEmbed);
-                            collector.stop('FINISH');
+
                         });
                     });
                 }

@@ -59,7 +59,7 @@ module.exports.setAssignedMembers=(guildID,taskID,subtaskID,bot,IDs)=>{
     const allTasks = this.getAllTasks(guildID,bot);
     const targetTask = allTasks.find(t=>t.id == taskID);
     //Set members
-    targetTask.subtasks[0]["assigned"] = IDs;
+    targetTask.subtasks[subtaskID]["assigned"] = IDs;
     //Save
     this.updateTask(targetTask.name,targetTask.date,targetTask.subtasks,guildID,bot,taskID);
 }

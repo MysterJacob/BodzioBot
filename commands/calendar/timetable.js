@@ -4,7 +4,7 @@ module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     const now = new Date();
     const guildsConfig = bot.modules.get('guilds-config');
     const timetable =guildsConfig.getGuildConfigKey(guild.id,"timetable");
-    const todayTimetable = timetable[now.getDay()];
+    const todayTimetable = timetable[now.getDay()-1];
     const embed = new discord.MessageEmbed();
     embed.setTitle('Today\'s timetable');
     embed.setTimestamp(now);
