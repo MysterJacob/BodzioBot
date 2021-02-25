@@ -8,7 +8,7 @@ module.exports.run = (msg,Flags,Parameters,bot,ret)=>{
     const userData = bot.modules.get('users-data');
     const now = new Date();
     const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id,'lastReputationInteraction')) || new Date(-100);
-
+    //Stack overflow (STOLEN CODE HERE)
     const diffMs = now - lastReputationInteraction;
     const diffDays =Math.floor(diffMs / 86400000); // days
     const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours

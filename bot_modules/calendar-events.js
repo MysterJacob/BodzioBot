@@ -5,17 +5,19 @@ module.exports.registerLiveEventForGuild=(guildID,bot)=>{
         
         tasks.forEach(task=>{
             const msToDeadLine = Date.parse(task.date) - now.getTime() ;
-            console.log(timeToDeadline.toString());
-            const days = msToDeadLine / (1000*60*60*24);
-            const hours = (msToDeadLine - days*(1000*60*60*24))/(1000*60*60);
-            const minutes = (msToDeadLine - hours*(1000*60*60))/(1000*60);
-            const seconds = (msToDeadLine - minutes*(1000*60))/(1000);
+            //Stack overflow (STOLEN CODE HERE)
+            const diffMs = msToDeadLine;
+            const diffDays =Math.floor(diffMs / 86400000); // days
+            const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+            const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+            //Remove task
             if(msToDeadLine <= 0){
                 this.removeTask(task.id,guildID,bot);
             }
         })
         
-    },59*1000)
+    },1*1000)
 }
 module.exports.setTask=(name,date,subtasks,GuildID,bot)=>{
     //Get all
@@ -35,7 +37,8 @@ module.exports.removeTask = (taskID,GuildID,bot)=>{
     const guildsConfig = bot.modules.get('guilds-config');
     let calendar = guildsConfig.getGuildConfigKey(GuildID,'calendar');
     const taskIndex = calendar.tasks.indexOf(calendar.tasks.find(task=>task.id == taskID));
-    calendar.tasks = calendar.tasks.splice(taskIndex);
+    calendar.tasks.splice(taskIndex,1);
+    //calendar.tasks.splice(taskIndex);
     guildsConfig.setGuildConfigKey(GuildID,'calendar',calendar);
 }
 module.exports.updateTask=(name,date,subtasks,GuildID,bot,TaskID)=>{

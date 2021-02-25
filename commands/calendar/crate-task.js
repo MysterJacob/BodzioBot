@@ -62,6 +62,7 @@ module.exports.run = async(msg,Flags,Parameters,bot,ret)=>{
                             //Assign members
                             calendarEvents.setAssignedMembers(guild.id,taskID,taskIndex,bot,assignedUserIDs)
                             me.edit(taskEmbed);
+                            collector.stop('FINISH');
                         });
                     });
                 }
