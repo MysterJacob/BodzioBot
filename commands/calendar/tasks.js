@@ -44,7 +44,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
             subTasks += `${subTaskname}\n ${assigned}\n`;
         }));
 
-        const fieldName = `${name}`;
+        const fieldName = `${name} \nID:${e.id}`;
         const fieldValue = `\`\`${formattedDate}\n${formattedTimeToEvent}\`\`\n${subTasks}`;
         embed.addField(fieldName, fieldValue);
     }));

@@ -51,7 +51,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
                             return ['✅', '⌛', '❌'].includes(reaction.emoji.name);
                         };
                         const reactionCollector = me.createReactionCollector(reactionColletor, {});
-                        collector.on('collect', (reaction, user)=>{
+                        reactionCollector.on('collect', (reaction, user)=>{
                             // PaxyNN, you know
                             const emoji = reaction._emoji.name;
                             // With out the bot
@@ -70,7 +70,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
                                     break;
 
                                 case '❌':
-                                    if(assigned.some(u=>u.id == user.id)) {
+                                    if(assigned.some(u=>u.id == user.id) && !done.some(u=>u.id == user.id)) {
                                         assigned.splice(assigned.indexOf(user), 1);
                                     }
                                     break;
