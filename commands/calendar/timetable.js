@@ -10,8 +10,42 @@ module.exports.run = async (msg,Flags,Parameters,bot,ret)=>{
     embed.setTimestamp(now);
     embed.setColor('#dde000');
     embed.setDescription('All today\'s lessons.');
+
     todayTimetable.forEach(lesson=>{
-        embed.addField(lesson.time,lesson.name);
+        const time = lesson.time;
+        const ts = time.split('-');
+
+        const cHour = now.getHours();
+        const cMinute = now.getMinutes();
+        const cDate = new Date();
+        cDate.setHours(cHour);
+        cDate.setMinutes(cMinute);
+
+        const startingTime = ts[0].split(':');
+        const startingHour = parseInt(startingTime[0]);
+        const startingMinute = parseInt(startingTime[1]);
+        const startingDate = new Date();
+        startingDate.setHours(startingHour);
+        startingDate.setMinutes(startingMinute);
+
+
+        const endingTime = ts[1].split(':');
+        const endingHour = parseInt(endingTime[0]);
+        const endingMinute = parseInt(endingTime[1]);
+        const endingDate = new Date();
+        endingDate.setHours(endingHour);
+        endingDate.setMinutes(endingMinute);
+        
+        if(cDate > startingDate && cDate < endingDate){
+            const diffMs = endingDate -cDate;
+            const diffDays =Math.floor(diffMs / 86400000); // days
+            const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+            const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+            embed.addField('*'+lesson.time,lesson.name + `\n ${diffHrs} Hours and ${diffMins} minutes to end.`);
+            
+        }else{
+            embed.addField(lesson.time,lesson.name);
+        }
     });
     msg.reply(embed);
     return ret;
