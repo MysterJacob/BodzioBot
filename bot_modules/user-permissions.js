@@ -20,7 +20,7 @@ module.exports.getPermissions = (Member, guild, bot)=>{
 };
 module.exports.matchPerms = (perms1, perms2)=>{
     for(let i = 0;i < perms1.length;i++) {
-        if(perms1.charAt(i) == perms2.charAt(i)) {
+        if(perms1.charAt(i) == perms2.charAt(i) && perms1.charAt(i) == '1') {
             return true;
         }
     }

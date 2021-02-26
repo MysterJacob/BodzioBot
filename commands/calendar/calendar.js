@@ -35,7 +35,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'calendar',
     desc:'Used to show all events',
-    permissions:'000001',
+    permissions:'111111',
     parameters:[],
     flags:{ i:{ 'type':'boolean' } },
 };

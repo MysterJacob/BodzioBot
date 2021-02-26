@@ -23,7 +23,7 @@ It has(will have) basic implementation of modules for basic task:
 ## WIP 
 - rr
 ## DONE
-- Calendar Events(didn't test)
+- Calendar Events(didn't test, nvm tested)
 - CrateTask
 - Ping
 - Perms
