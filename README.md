@@ -20,7 +20,6 @@ It has(will have) basic implementation of modules for basic task:
 ## Planned
 - Quotes(OTD)
 - Settigns
-- Bot info
 ## WIP 
 - rr
 ## DONE
@@ -34,6 +33,7 @@ It has(will have) basic implementation of modules for basic task:
 - User Card
 - Timetable
 - Remove Task
+- Bot info
 # Modules
 
 ## Planned
