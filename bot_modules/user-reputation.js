@@ -1,5 +1,4 @@
-const { User } = require('discord.js');
-const logger = require('./logger');
+// const logger = require('./logger');
 
 module.exports.addReputation = (UserID, value, bot)=>{
     const userData = bot.modules.get('users-data');

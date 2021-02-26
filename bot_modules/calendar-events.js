@@ -5,8 +5,6 @@ module.exports.registerLiveEventForGuild = (guildID, bot)=>{
         const events = this.getAllEvents(guildID, bot);
         tasks.forEach(task=>{
             const msToDeadLine = Date.parse(task.date) - now.getTime() ;
-            // Stack overflow (STOLEN CODE HERE)
-            const diffMs = msToDeadLine;
             // Remove task
             if(msToDeadLine <= 0) {
                 this.removeTask(task.id, guildID, bot);
@@ -14,8 +12,6 @@ module.exports.registerLiveEventForGuild = (guildID, bot)=>{
         });
         events.forEach(event=>{
             const msToDeadLine = Date.parse(event.date) - now.getTime() ;
-            // Stack overflow (STOLEN CODE HERE)
-            const diffMs = msToDeadLine;
             // Remove task
             if(msToDeadLine <= 0) {
                 this.removeEvent(event.id, guildID, bot);

@@ -1,4 +1,4 @@
-const logger = require('./logger');
+// const logger = require('./logger');
 
 module.exports.checkLink = (msg)=>{
     const channel = msg.channel;
