@@ -72,7 +72,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'rr',
     desc:'Playing game of chanse.',
-    permissions:'111111',
+    permissions:'000001',
     parameters:[],
     flags:{},
 };

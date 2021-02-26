@@ -20,6 +20,7 @@ It has(will have) basic implementation of modules for basic task:
 ## Planned
 - Quotes(OTD)
 - Settigns
+- Bot info
 ## WIP 
 - rr
 ## DONE
