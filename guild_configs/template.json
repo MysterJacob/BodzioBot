@@ -8,7 +8,8 @@
         "moderator":""
     },
     "calendar":{
-        "tasks":[]
+        "tasks":[],
+        "events":[]
     },
     "timetable":[
         [{"time":"8:00-10-30","name":"ICJCOUZK-351203.M1.J1"},{"time":"10:45-11:30","name":"EDB"},{"time":"11:35-12:20","name":"Język polski"},{"time":"12:25-13:10","name":"STGiM-351203.M1.J3"}],

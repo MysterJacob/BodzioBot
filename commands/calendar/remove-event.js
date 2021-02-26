@@ -15,7 +15,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'delevent',
     desc:'Used to remove events',
-    permissions:'000001',
+    permissions:'111111',
     parameters:[{ name:'ID', type:'string', optional:false }],
     flags:{},
 };

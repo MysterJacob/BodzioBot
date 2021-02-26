@@ -216,26 +216,24 @@ module.exports.parse = async (aParameters, aFlags, args, guild)=>{
                     // Boolean
                     parsed.flags.array[flagName] = true;
                 }
-                else if(Input.length >= i + 1) {
+                else if(Input.length > i + 1) {
                     // Value like
-                    if(Input.length >= i + 1) {
-                        i++;
-                        const parsedData = await this.parseArgument(aFlag.type, Input[i], guild);
+                    i++;
+                    const parsedData = await this.parseArgument(aFlag.type, Input[i], guild);
 
-                        if(parsedData.error.code != 0) {
-                            parsed.error.code = 5;
-                            parsed.error.message = `Flag \`\`${flagName}\`\` not typeof \`\`${aFlag.type}\`\`\nCode ${parsedData.error.code}:${parsedData.error.message} \n`;
-                            parsed.error.index = i;
-                            return parsed;
-                        }
-                        parsed.flags.array[flagName] = parsedData.output;
-                    }
-                    else{
-                        parsed.error.code = 2;
-                        parsed.error.message = `No value specified to flag \`\`${flagName}\`\``;
+                    if(parsedData.error.code != 0) {
+                        parsed.error.code = 5;
+                        parsed.error.message = `Flag \`\`${flagName}\`\` not typeof \`\`${aFlag.type}\`\`\nCode ${parsedData.error.code}:${parsedData.error.message} \n`;
                         parsed.error.index = i;
                         return parsed;
                     }
+                    parsed.flags.array[flagName] = parsedData.output;
+                }
+                else{
+                    parsed.error.code = 2;
+                    parsed.error.message = `No value specified to flag \`\`${flagName}\`\``;
+                    parsed.error.index = i;
+                    return parsed;
                 }
             }
             else{

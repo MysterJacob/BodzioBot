@@ -6,8 +6,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const guild = msg.guild;
     if(Parameters.isSet('hour')) {
         const dateHour = Parameters.get('hour');
-        date.setHours(dateHour.getHours());
-        date.setMinutes(dateHour.setHours());
+        date.setHours(dateHour.getHours(), dateHour.getMinutes(), 0);
     }
     const taskID = calendarEvents.addEvent(name, date, guild.id, bot);
     msg.reply(`Created event with name \`\`${name}\`\` on ${date.toString()}, with id:${taskID}`);
@@ -16,7 +15,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'addevent',
     desc:'Used to register events',
-    permissions:'000001',
+    permissions:'111111',
     parameters:[{ name:'name', type:'string', optional:false }, { name:'date', type:'date', optional:false }, { name:'hour', type:'hour', optional:true }],
     flags:{},
 };

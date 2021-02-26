@@ -7,9 +7,9 @@ module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
     const userReputation = bot.modules.get('user-reputation');
     const embed = new discord.MessageEmbed();
     embed.setColor('#6e0265') ;
-    embed.setTitle(`Reputation of user ${member.user.tag.toString()}`);
+    embed.setAuthor(`Reputation of user ${member.user.tag.toString()}`);
     embed.setTimestamp(new Date());
-    embed.setAuthor(userReputation.getReputation(member.id, bot));
+    embed.setTitle(userReputation.getUserReputation(member.id, bot));
     msg.reply(embed);
     return ret;
 };

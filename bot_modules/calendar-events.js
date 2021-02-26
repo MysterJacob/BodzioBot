@@ -26,8 +26,8 @@ module.exports.registerLiveEventForGuild = (guildID, bot)=>{
 };
 module.exports.getAllEvents = (guildID, bot)=>{
     const guildsConfig = bot.modules.get('guilds-config');
-    const calenderTasks = guildsConfig.getGuildConfigKey(guildID, 'calendar')['tasks'];
-    return calenderTasks;
+    const calenderEvents = guildsConfig.getGuildConfigKey(guildID, 'calendar')['events'];
+    return calenderEvents;
 };
 module.exports.addEvent = (name, date, guildID, bot)=>{
     // Get all
@@ -35,7 +35,7 @@ module.exports.addEvent = (name, date, guildID, bot)=>{
     const calendar = guildsConfig.getGuildConfigKey(guildID, 'calendar');
     const event = { name:name, date:date.toString(), id:(new Date().getTime()) };
     // Add task
-    const allEvents = this.getAllTasks(guildID, bot);
+    const allEvents = this.getAllEvents(guildID, bot);
     allEvents.push(event);
     // Set tast
     calendar.events = allEvents;
