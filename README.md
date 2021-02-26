@@ -19,9 +19,9 @@ It has(will have) basic implementation of modules for basic task:
 
 ## Planned
 - Quotes(OTD)
-- Settigns
+- Settings
 ## WIP 
-- rr
+
 ## DONE
 - Calendar Events(didn't test, nvm tested)
 - CrateTask

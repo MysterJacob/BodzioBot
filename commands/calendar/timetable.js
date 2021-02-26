@@ -4,7 +4,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const now = new Date();
     const guildsConfig = bot.modules.get('guilds-config');
     const timetable = guildsConfig.getGuildConfigKey(guild.id, 'timetable');
-    const todayTimetable = timetable[now.getDay() - 1];
+    const todayTimetable = timetable[now.getDay() - 1] || [];
     const embed = new discord.MessageEmbed();
     embed.setTitle('Today\'s timetable');
     embed.setTimestamp(now);
@@ -38,7 +38,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 
         if(cDate > startingDate && cDate < endingDate) {
             const diffMs = endingDate - cDate;
-            const diffDays = Math.floor(diffMs / 86400000); // days
+            // const diffDays = Math.floor(diffMs / 86400000); // days
             const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
             const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
             embed.addField('*' + lesson.time, lesson.name + `\n ${diffHrs} Hours and ${diffMins} minutes to end.`);
