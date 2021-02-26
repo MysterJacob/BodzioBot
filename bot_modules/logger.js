@@ -1,5 +1,5 @@
 // Module resposible for logs
-const fs = require('fs');
+// const fs = require('fs');
 const path = require('path');
 module.exports = function(attachedModule) {
     let filename = path.basename(attachedModule);
