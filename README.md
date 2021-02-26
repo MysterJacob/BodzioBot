@@ -18,12 +18,12 @@ It has(will have) basic implementation of modules for basic task:
 # Commands
 
 ## Planned
-- Remove Task
 - Quotes(OTD)
 - Settigns
 ## WIP 
 - rr
 ## DONE
+- Calendar Events(didn't test)
 - CrateTask
 - Ping
 - Perms
@@ -31,7 +31,8 @@ It has(will have) basic implementation of modules for basic task:
 - Help
 - Rep,+Rep,-Rep
 - User Card
-- Schedule
+- Timetable
+- Remove Task
 # Modules
 
 ## Planned

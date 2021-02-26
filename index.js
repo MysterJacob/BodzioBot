@@ -82,6 +82,9 @@ botClient.on('ready', async ()=>{
 // On message
 botClient.on('message', async msg=>{
 
+    if(msg.channel == 'bango') {
+        msg.reply('Bango');
+    }
     if(msg.channel.type == 'dm' || msg.author.bot) {return;}
     const content = msg.content;
     const guild = msg.guild;

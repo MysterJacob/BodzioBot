@@ -2,23 +2,57 @@ module.exports.registerLiveEventForGuild = (guildID, bot)=>{
     setInterval(()=>{
         const now = new Date();
         const tasks = this.getAllTasks(guildID, bot);
-
+        const events = this.getAllEvents(guildID, bot);
         tasks.forEach(task=>{
             const msToDeadLine = Date.parse(task.date) - now.getTime() ;
             // Stack overflow (STOLEN CODE HERE)
             const diffMs = msToDeadLine;
-            const diffDays = Math.floor(diffMs / 86400000); // days
-            const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-            const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-
             // Remove task
             if(msToDeadLine <= 0) {
                 this.removeTask(task.id, guildID, bot);
             }
         });
+        events.forEach(event=>{
+            const msToDeadLine = Date.parse(event.date) - now.getTime() ;
+            // Stack overflow (STOLEN CODE HERE)
+            const diffMs = msToDeadLine;
+            // Remove task
+            if(msToDeadLine <= 0) {
+                this.removeEvent(event.id, guildID, bot);
+            }
+        });
 
-    }, 1 * 1000);
+    }, 59 * 1000);
 };
+module.exports.getAllEvents = (guildID, bot)=>{
+    const guildsConfig = bot.modules.get('guilds-config');
+    const calenderTasks = guildsConfig.getGuildConfigKey(guildID, 'calendar')['tasks'];
+    return calenderTasks;
+};
+module.exports.addEvent = (name, date, guildID, bot)=>{
+    // Get all
+    const guildsConfig = bot.modules.get('guilds-config');
+    const calendar = guildsConfig.getGuildConfigKey(guildID, 'calendar');
+    const event = { name:name, date:date.toString(), id:(new Date().getTime()) };
+    // Add task
+    const allEvents = this.getAllTasks(guildID, bot);
+    allEvents.push(event);
+    // Set tast
+    calendar.events = allEvents;
+    // Save task
+    guildsConfig.setGuildConfigKey(guildID, 'calendar', calendar);
+    return event.id;
+};
+module.exports.removeEvent = (eventID, guildID, bot)=>{
+    const guildsConfig = bot.modules.get('guilds-config');
+    const calendar = guildsConfig.getGuildConfigKey(guildID, 'calendar');
+    const eventIndex = calendar.events.indexOf(calendar.events.find(event=>event.id == eventID));
+    calendar.events.splice(eventIndex, 1);
+    // calendar.tasks.splice(taskIndex);
+    guildsConfig.setGuildConfigKey(guildID, 'calendar', calendar);
+    return eventIndex != -1;
+};
+
 module.exports.setTask = (name, date, subtasks, GuildID, bot)=>{
     // Get all
     const guildsConfig = bot.modules.get('guilds-config');
