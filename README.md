@@ -14,6 +14,8 @@ It has(will have) basic implementation of modules for basic task:
 - Prefix /
 - Flags / lub -
 - Parameter spliting \s
+# IDEA
+- Dodać linki do planu lekcji
 
 # Commands
 

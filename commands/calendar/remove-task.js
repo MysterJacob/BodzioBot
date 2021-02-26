@@ -1,4 +1,3 @@
-const discord = require('discord.js');
 module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const calendarEvents = bot.modules.get('calendar-events');
     const taskID = Parameters.get('taskID');
@@ -12,7 +11,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     return ret;
 };
 module.exports.config = {
-    name:'removetask',
+    name:'deltask',
     desc:'Used to remove task',
     permissions:'011111',
     parameters:[{ name:'taskID', type:'string', optional:false }],

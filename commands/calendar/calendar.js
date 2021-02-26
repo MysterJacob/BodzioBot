@@ -6,7 +6,8 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     calendarEmbed.setThumbnail('');
     calendarEmbed.setColor('FF6633');
     const calendarEvents = bot.modules.get('calendar-events');
-    const events = calendarEvents.getAllEvents(msg.guild.id, bot);
+    let events = calendarEvents.getAllEvents(msg.guild.id, bot);
+    events = events.concat(calendarEvents.getAllTasks(msg.guild.id, bot));
     const fields = [];
     events.forEach(event=>{
         const id = Flags.isSet('i') ? `ID:${event.id}` : '';

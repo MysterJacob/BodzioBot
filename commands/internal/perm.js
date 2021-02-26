@@ -1,11 +1,11 @@
 const discord = require('discord.js');
-const logger = require('../../bot_modules/logger')(__filename);
+// const logger = require('../../bot_modules/logger')(__filename);
 module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     let member = Parameters.get('member');
     if(!Parameters.isSet('member')) {
         member = msg.member;
     }
-    const userData = bot.modules.get('users-data');
+    // const userData = bot.modules.get('users-data');
     const guild = msg.guild;
     const userPermissions = bot.modules.get('user-permissions');
     const embed = new discord.MessageEmbed();

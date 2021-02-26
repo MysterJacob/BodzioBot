@@ -68,6 +68,7 @@ function loadCommands() {
 // Bot events
 loadModules();
 loadCommands();
+
 // On ready
 botClient.on('ready', async ()=>{
     logger.print('Bot is up and running');
