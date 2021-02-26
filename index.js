@@ -67,7 +67,6 @@ function loadCommands() {
 
 // Bot events
 loadModules();
-
 loadCommands();
 // On ready
 botClient.on('ready', async ()=>{
