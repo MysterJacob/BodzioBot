@@ -1,2 +1,2 @@
 echo Starting the bot
-nodemon . 
+node . 
