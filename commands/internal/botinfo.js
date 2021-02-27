@@ -8,6 +8,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     infoEmbed.setThumbnail(bot.user.avatarURL());
     infoEmbed.addField('Author', 'Myster#7218', true);
     infoEmbed.addField('Data publikacji', '26.02.2021 20:00');
+    infoEmbed.addField('Wersja discord.js', discord.version);
     infoEmbed.setTimestamp(new Date());
     msg.reply(infoEmbed);
     return ret;
