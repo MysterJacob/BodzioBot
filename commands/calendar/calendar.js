@@ -13,8 +13,8 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const id = Flags.isSet('i') ? `ID:${event.id}` : '';
         const date = new Date(Date.parse(event.date));
         const name = event.name;
-        const day = date.getDate() + 1;
-        const month = date.getMonth();
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
         const formatedDate = `${day >= 10 ? day : '0' + day}/${month >= 10 ? month : '0' + month}/${date.getFullYear()}`;
         const hours = date.getHours();
         const minutes = date.getMinutes();
