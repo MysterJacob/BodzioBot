@@ -1,4 +1,3 @@
-const logger = require('../../bot_modules/logger');
 const discord = require('discord.js');
 module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
     const userReputation = bot.modules.get('user-reputation');
@@ -7,11 +6,14 @@ module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
     const giver = msg.member;
     const userData = bot.modules.get('users-data');
     const now = new Date();
-    const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id, 'lastReputationInteraction')) || new Date(-100);
-
-    const diffMs = now - lastReputationInteraction;
-    const diffDays = Math.floor(diffMs / 86400000); // days
-    const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    if(target.id == giver.id) {
+        ret.exitCode = Math.round(Math.random() * 1000) ;
+        ret.message = Math.round(Math.random() * 1000) == 0 ? 'Dont you try again.' : 'You can\'t give reputation to yourself';
+        return ret;
+    }
+    const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id, 'lastReputationInteraction')) || (10000 * 60 * 31);
+    // Stack overflow (STOLEN CODE HERE)
+    const diffMs = now.getTime() - lastReputationInteraction;
     const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
     if(diffMins < 30) {
@@ -29,7 +31,7 @@ module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
     // Rep use
 
     const newRep = userReputation.reduceReputation(target.id, giver.id, bot);
-    msg.reply(`Użytkownik ${target} ma teraz ${newRep} punktów reputacji.`);
+    msg.reply(`User ${target} has ``${newRep}`` reputation now.`);
     return ret;
 };
 

@@ -68,3 +68,4 @@ The permissons are converted to base 2 integer and then displayed as "level"
 
 # Known bugs 
 - Timer going negative if less than 5 is supplied.
+- Rep, just broke, just broke idk.

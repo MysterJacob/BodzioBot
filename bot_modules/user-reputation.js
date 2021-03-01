@@ -1,41 +1,75 @@
 // const logger = require('./logger');
+const fs = require('fs');
+module.exports.getRanking = (places, guild, bot) =>{
+    const readen = fs.readdirSync('./user_data/');
+    const reputation = [];
+    const members = guild.members.cache;
+    readen.forEach(file=>{
+        const userID = file.split('.')[0];
+        if(members.some(m=>m.id == userID)) {
+            const userReputation = this.getUserReputation(userID, bot);
+            const value = { id:userID, reputation:userReputation };
+            if(userID != 'template') { reputation.push(value); }
+        }
+    });
+    const buffer = reputation.slice();
+    const sorted = [];
 
-module.exports.addReputation = (UserID, value, bot)=>{
-    const userData = bot.modules.get('users-data');
-    const userRep = userData.getUserConfigKey(UserID, 'reputation') || 0;
-    userData.setUserConfigKey(UserID, 'reputation', userRep + value);
+    for(let i = 0;i < reputation.length;i++) {
+        let last = { id: '', reputation: 0 };
+        for(let j = 0;j < buffer.length;j++) {
+            const current = buffer[j];
+            if(last.id == '') {
+                last = current;
+            }
+            if(current.reputation >= last.reputation) {
+                last = current;
+            }
+        }
+        sorted.push(last);
+        buffer.splice(buffer.indexOf(last), 1);
+        if(sorted.length > places + 1) {
+            break;
+        }
+    }
+    return sorted;
 };
-module.exports.removeReputation = (UserID, value, bot)=>{
+module.exports.addReputation = (userID, value, bot)=>{
     const userData = bot.modules.get('users-data');
-    const userRep = userData.getUserConfigKey(UserID, 'reputation') || 0;
-    userData.setUserConfigKey(UserID, 'reputation', userRep - value);
+    const userRep = userData.getUserConfigKey(userID, 'reputation') || 0;
+    userData.setUserConfigKey(userID, 'reputation', userRep + value);
+};
+module.exports.removeReputation = (userID, value, bot)=>{
+    const userData = bot.modules.get('users-data');
+    const userRep = userData.getUserConfigKey(userID, 'reputation') || 0;
+    userData.setUserConfigKey(userID, 'reputation', userRep - value);
 };
 
-module.exports.getUserReputation = (UserID, bot)=>{
+module.exports.getUserReputation = (userID, bot)=>{
     const userData = bot.modules.get('users-data');
-    const userRep = userData.getUserConfigKey(UserID, 'reputation') || 0;
+    const userRep = userData.getUserConfigKey(userID, 'reputation') || 0;
     return userRep;
 };
-module.exports.giveReputation = (UserID, GiverID, bot)=>{
+module.exports.giveReputation = (userID, giverID, bot)=>{
     const userData = bot.modules.get('users-data');
-    let userRep = userData.getUserConfigKey(UserID, 'reputation') || 0;
-    const giverRep = userData.getUserConfigKey(GiverID, 'reputation') || 0;
+    let userRep = userData.getUserConfigKey(userID, 'reputation') || 0;
+    const giverRep = userData.getUserConfigKey(giverID, 'reputation') || 0;
     const diffrence = (userRep - giverRep) + 0.1;
     userRep += diffrence * 0.1;
     userRep = Math.round(userRep * 100) / 100;
-    userData.setUserConfigKey(UserID, 'reputation', userRep);
-    userData.setUserConfigKey(GiverID, 'reputation', giverRep);
+    userData.setUserConfigKey(userID, 'reputation', userRep);
+    userData.setUserConfigKey(giverID, 'reputation', giverRep);
     return userRep;
 };
-module.exports.reduceReputation = (UserID, GiverID, bot)=>{
+module.exports.reduceReputation = (userID, giverID, bot)=>{
     const userData = bot.modules.get('users-data');
-    let userRep = userData.getUserConfigKey(UserID, 'reputation') || 0;
-    const giverRep = userData.getUserConfigKey(GiverID, 'reputation') || 0;
+    let userRep = userData.getUserConfigKey(userID, 'reputation') || 0;
+    const giverRep = userData.getUserConfigKey(giverID, 'reputation') || 0;
     const diffrence = (userRep - giverRep) + 0.1;
     userRep -= diffrence * 0.1;
     userRep = Math.round(userRep * 100) / 100;
-    userData.setUserConfigKey(UserID, 'reputation', userRep);
-    userData.setUserConfigKey(GiverID, 'reputation', giverRep);
+    userData.setUserConfigKey(userID, 'reputation', userRep);
+    userData.setUserConfigKey(giverID, 'reputation', giverRep);
     return userRep;
 };
 module.exports.config = {
