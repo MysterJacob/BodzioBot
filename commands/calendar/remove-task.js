@@ -13,7 +13,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'deltask',
     desc:'Used to remove task',
-    permissions:'011111',
+    permissions:'011010',
     parameters:[{ name:'taskID', type:'string', optional:false }],
     flags:{},
 };

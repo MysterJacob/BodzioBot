@@ -39,7 +39,6 @@ It has(will have) basic implementation of modules for basic task:
 
 ## Planned
 - API
-- Money($,BTC, ETC and stuff)
 
 ## WIP 
 

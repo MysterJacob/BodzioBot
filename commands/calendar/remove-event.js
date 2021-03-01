@@ -1,4 +1,3 @@
-const discord = require('discord.js');
 module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const calendarEvents = bot.modules.get('calendar-events');
     const eventID = Parameters.get('ID');
@@ -15,7 +14,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'delevent',
     desc:'Used to remove events',
-    permissions:'111111',
+    permissions:'011010',
     parameters:[{ name:'ID', type:'string', optional:false }],
     flags:{},
 };
