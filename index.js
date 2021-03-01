@@ -116,7 +116,7 @@ botClient.on('message', async msg=>{
         logger.print(`${author.tag} requested executing command ${commandName}`);
         const command = botClient.commands.get(commandName);
         if(command == undefined) {
-            msg.reply(`Brak komendy o nazwie \`\`${commandName}\`\``);
+            msg.reply(`No command named \`\`${commandName}\`\``);
             logger.print(`${author.tag} failed to execute command ${commandName}`);
         }
         else{

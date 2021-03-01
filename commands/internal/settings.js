@@ -22,7 +22,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const guildRoles = guildConfig.roles;
         const fetchedRoles = await guild.roles.fetch();
         const moderatorRole = guildRoles.moderator != '' ? fetchedRoles.cache.get(guildRoles.moderator) : 'not set';
-        const roles = `Moderator:${moderatorRole}`;
+        const roles = `Moderator: ${moderatorRole}`;
         infoEmbed.addField('Roles', roles);
 
         msg.reply(infoEmbed);

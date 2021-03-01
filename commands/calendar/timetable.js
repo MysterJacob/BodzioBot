@@ -10,7 +10,10 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     embed.setTimestamp(now);
     embed.setColor('#dde000');
     embed.setDescription('All today\'s lessons.');
-
+    if(Flags.isSet('e')) {
+        await this.edit(guild, msg, bot);
+        return ret;
+    }
     todayTimetable.forEach(lesson=>{
         const time = lesson.time;
         const ts = time.split('-');
@@ -51,10 +54,32 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     msg.reply(embed);
     return ret;
 };
+this.displayLessons = (embed, lessons, message) => {
+    embed.fields = [];
+    lessons.forEach(lesson => {
+        embed.addField(lesson.time, lesson.name);
+    });
+    message.edit(embed);
+};
+this.edit = async (guild, msg, bot) => {
+    const guildsConfig = bot.modules.get('guilds-config');
+    const timetable = guildsConfig.getGuildConfigKey(guild.id, 'timetable');
+    const embed = new discord.MessageEmbed();
+    const emojis = ['⬅️', '⬇️', '⬆️', '➡️'];
+    msg.reply(embed).then(async (message)=>{
+        const lessonIndex = 0;
+        const lessons = timetable[lessonIndex];
+        await Promise.all(emojis.forEach(async reaction => {
+            await message.react(reaction);
+        }));
+        this.displayLessons(embed, lessons, message);
+    });
+
+};
 module.exports.config = {
     name:'timetable',
     desc:'Displays the timetable.',
     permissions:'111111',
     parameters:[],
-    flags:{},
+    flags:{ e:{ type:'boolean' } },
 };
