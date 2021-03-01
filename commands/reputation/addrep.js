@@ -31,7 +31,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     // Rep use
 
     const newRep = userReputation.giveReputation(target.id, giver.id, bot);
-    msg.reply(`User ${target} has ``${newRep}`` reputation now.`);
+    msg.reply(`User ${target} has ${newRep} reputation now.`);
     return ret;
 };
 

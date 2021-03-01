@@ -1,7 +1,7 @@
 const discord = require('discord.js');
 module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const count = Flags.get('c') || 3;
-    const guild = msg.guild;
+    const guild = await msg.guild.fetch();
     const list = bot.modules.get('user-reputation').getRanking(count, guild, bot);
     const embed = new discord.MessageEmbed();
     embed.setTimestamp('Reputation top');
