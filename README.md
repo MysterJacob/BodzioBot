@@ -15,7 +15,8 @@ It has(will have) basic implementation of modules for basic task:
 - Flags / lub -
 - Parameter spliting \s
 # IDEA
-- Dodać linki do planu lekcji
+- Make timetable editable
+- Add links to timetable
 
 # Commands
 

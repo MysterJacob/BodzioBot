@@ -12,7 +12,7 @@
         "events":[]
     },
     "timetable":[
-        [{"time":"8:00-10-30","name":"ICJCOUZK-351203.M1.J1"},{"time":"10:45-11:30","name":"EDB"},{"time":"11:35-12:20","name":"Język polski"},{"time":"12:25-13:10","name":"STGiM-351203.M1.J3"}],
+        [{"time":"8:00-10:30","name":"ICJCOUZK-351203.M1.J1"},{"time":"10:45-11:30","name":"EDB"},{"time":"11:35-12:20","name":"Język polski"},{"time":"12:25-13:10","name":"STGiM-351203.M1.J3"}],
         [{"time":"8:00-08:45","name":"Język angielski"},{"time":"08:50-09:35","name":"Zajęcia z wychowawcą"},{"time":"09:45-10:30","name":"WF"},{"time":"09:45-11:30","name":"WF"},{"time":"11:35-13:10","name":"Matematyka"},{"time":"13:20-14:05","name":"SPBiHPOPoOS-351203.M2.J1 "}],
         [{"time":"8:00-08:45","name":"Fizyka"},{"time":"08:50-09:35","name":"Religia"},{"time":"09:45-10:30","name":"Historia"},{"time":"10:45-11:30","name":"Chemia"},{"time":"11:35-12:20","name":"Filozofia"},{"time":"12:25-13:10","name":"Język polski"},{"time":"13:20-14:55","name":"Język niemiecki"}],
         [{"time":"8:00-10:30","name":"DiNKO-351203.M1.J4"},{"time":"10:45-11:30","name":"Historia"},{"time":"11:35-12:20","name":"Religia"}],
