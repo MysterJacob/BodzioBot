@@ -11,7 +11,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         ret.message = Math.round(Math.random() * 1000) == 0 ? 'Dont you try again.' : 'You can\'t give reputation to yourself';
         return ret;
     }
-    const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id, 'lastReputationInteraction')) || 0;
+    const lastReputationInteraction = Date.parse(userData.getUserConfigKey(giver.id, 'lastReputationInteraction')) || 10000000000;
     // Stack overflow (STOLEN CODE HERE)
     const diffMs = now.getTime() - lastReputationInteraction;
     const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
