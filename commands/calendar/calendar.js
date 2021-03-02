@@ -48,7 +48,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
             const month = splited[1];
             const year = splited[2];
             const bias = parseInt(year + month + day);
-            if(bias <= lastBias) {
+            if(bias <= lastBias || lastBias == 0) {
                 latestIndex = j;
                 lastBias = bias;
             }

@@ -17,7 +17,8 @@ It has(will have) basic implementation of modules for basic task:
 # IDEA
 - Make timetable editable
 - Add links to timetable
-
+- Make done tasks done in -tasks
+- Setting
 # Commands
 
 ## Planned
