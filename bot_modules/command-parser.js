@@ -18,7 +18,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         parsed.output = numb;
         break;
     case 'member':
-        if(Input.length == 18) {
+        if(Input.match('^(\d{18})')) {
             // By id
             try{
                 const member = await guild.members.fetch(Input);
@@ -26,20 +26,19 @@ module.exports.parseArgument = async (type, Input, guild)=>{
             }
             catch(e) {
                 parsed.error.code = 2;
-                parsed.error.message = 'Couldn\'t find member!';
+                parsed.error.message = 'Couldn\'t find member by!';
             }
         }
         else if(Input.startsWith('<@')) {
             // By ping
             try{
                 const userID = Input.slice(3, 21);
-                logger.print(userID);
                 const member = await guild.members.fetch(userID);
                 parsed.output = member;
             }
             catch(e) {
                 parsed.error.code = 2;
-                parsed.error.message = 'Couldn\'t find member!';
+                parsed.error.message = 'Couldn\'t find member by mention!';
             }
 
         }
@@ -52,7 +51,77 @@ module.exports.parseArgument = async (type, Input, guild)=>{
             }
             else{
                 parsed.error.code = 2;
-                parsed.error.message = 'Couldn\'t find member!';
+                parsed.error.message = 'Couldn\'t find member by Nickname,tag,username or discriminator!';
+            }
+        }
+        break;
+    case 'role':
+        if(Input.match('^(\d{18})')) {
+            const role = await guild.roles.fetch(Input);
+            if(role != undefined) {
+                parsed.output = role;
+            }
+            else{
+                parsed.error.code = 8;
+                parsed.error.message = 'Couldn\'t find role by ID!';
+            }
+        }
+        else if(Input.startsWith('<@&')) {
+            const roleID = Input.slice(3, 21);
+            console.log(roleID);
+            const roles = await guild.roles.fetch();
+            const role = roles.cache.find(m=>m.id == roleID);
+            if(role != undefined) {
+                parsed.output = role;
+            }
+            else{
+                parsed.error.code = 8;
+                parsed.error.message = 'Couldn\'t find role by mention!';
+            }
+        }
+        else {
+            const roles = await guild.roles.fetch();
+            const role = roles.cache.find(m=>m.name == Input);
+            if(role != undefined) {
+                parsed.output = role;
+            }
+            else{
+                parsed.error.code = 8;
+                parsed.error.message = 'Couldn\'t find role by name!';
+            }
+        }
+        break;
+    case 'channel':
+        if(Input.match('^(\d{18})')) {
+            const channel = await guild.channels.cache.find(ch=>ch.id == Input);
+            if(channel != undefined) {
+                parsed.output = channel;
+            }
+            else{
+                parsed.error.code = 7;
+                parsed.error.message = 'Couldn\'t find channel by ID!';
+            }
+        }
+        else if(Input.startsWith('<#')) {
+            const channelID = Input.slice(2, 20);
+            console.log(channelID);
+            const channel = await guild.channels.cache.find(ch=>ch.id == channelID);
+            if(channel != undefined) {
+                parsed.output = channel;
+            }
+            else{
+                parsed.error.code = 7;
+                parsed.error.message = 'Couldn\'t find channel by mention!';
+            }
+        }
+        else {
+            const channel = await guild.channels.cache.find(ch=>ch.name == Input);
+            if(channel != undefined) {
+                parsed.output = channel;
+            }
+            else{
+                parsed.error.code = 7;
+                parsed.error.message = 'Couldn\'t find channel by name!';
             }
         }
         break;
@@ -71,6 +140,20 @@ module.exports.parseArgument = async (type, Input, guild)=>{
 
             parsed.output = date;
 
+        }
+        else if(Input.match('([0-3][0-9].[0-1][0-9].[0-9][0-9][0-9][0-9])')) {
+            const splited = Input.split('.');
+            const day = parseInt(splited[0]);
+            const month = parseInt(splited[1]);
+            const year = parseInt(splited[2]);
+
+            const date = new Date();
+            date.setHours(0, 0, 0);
+            date.setDate(day);
+            date.setMonth(month - 1);
+            date.setFullYear(year);
+
+            parsed.output = date;
         }
         else{
             parsed.error.code = 5;
@@ -106,7 +189,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         }
         else{
             parsed.error.code = 6;
-            parsed.error.message = 'Wron hour format(hh:mm).';
+            parsed.error.message = 'Wrong hour format(hh:mm).';
         }
         break;
     case 'time':
@@ -205,9 +288,9 @@ module.exports.parse = async (aParameters, aFlags, args, guild)=>{
     }
     let parameterIndex = 0;
     for(let i = 0;i < Input.length;i++) {
-        const arg = Input[i];
+        let arg = Input[i];
         // Flag or parameter
-        if(arg.startsWith('/') || arg.startsWith('-')) {
+        if((arg.startsWith('/') || arg.startsWith('-')) && !arg.startsWith('\\')) {
             // Flag
             const flagName = arg.slice(1).replace(' ', '');
             if(flagName in aFlags) {
@@ -250,6 +333,9 @@ module.exports.parse = async (aParameters, aFlags, args, guild)=>{
             parsed.error.index = i;
         }
         else{
+            if(arg.startsWith('\\')) {
+                arg = arg.slice(1);
+            }
             const param = aParameters[parameterIndex];
             const parsedData = await this.parseArgument(param.type, arg, guild);
             if(parsedData.error.code != 0) {
@@ -260,7 +346,6 @@ module.exports.parse = async (aParameters, aFlags, args, guild)=>{
             parsed.parameters.array[param.name] = parsedData.output;
             parameterIndex++;
         }
-
     }
     for(let i = parameterIndex;i < aParameters.length;i++) {
         const param = aParameters[i];

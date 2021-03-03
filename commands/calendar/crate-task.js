@@ -19,6 +19,9 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const hour = Parameters.get('hour');
         date.setHours(hour.getHours(), hour.getMinutes(), 0);
     }
+    else{
+        date.setHours(23, 59, 59);
+    }
 
     // {"name":"", "date":"", "subtasks":[{"name":"", "assigned":[]}, {"name":"", "assigned":[]}]},
     const subtasks = [];
@@ -47,7 +50,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
                         const done = [];
                         const taskIndex = i;
                         // Await assigment
-                        const reactionColletor = (reaction, user) => {
+                        const reactionColletor = (reaction) => {
                             return ['✅', '⌛', '❌'].includes(reaction.emoji.name);
                         };
                         const reactionCollector = me.createReactionCollector(reactionColletor, {});

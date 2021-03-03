@@ -1,4 +1,3 @@
-const discord = require('discord.js');
 module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const calendarEvents = bot.modules.get('calendar-events');
     const date = Parameters.get('date');
@@ -8,8 +7,11 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const dateHour = Parameters.get('hour');
         date.setHours(dateHour.getHours(), dateHour.getMinutes(), 0);
     }
-    const taskID = calendarEvents.addEvent(name, date, guild.id, bot);
-    msg.reply(`Created event with name \`\`${name}\`\` on ${date.toString()}, with id:${taskID}`);
+    else{
+        date.setHours(23, 59, 59);
+    }
+    const eventID = calendarEvents.addEvent(name, date, guild.id, bot);
+    msg.reply(`Created event with name \`\`${name}\`\` on ${date.toString()}, with id:${eventID}`);
     return ret;
 };
 module.exports.config = {

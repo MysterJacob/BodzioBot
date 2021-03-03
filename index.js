@@ -1,3 +1,5 @@
+const myArgs = process.argv.slice(2);
+const debug = myArgs.includes('-debug');
 // Modules
 const discord = require('discord.js');
 const fs = require('fs');
@@ -72,6 +74,9 @@ loadCommands();
 // On ready
 botClient.on('ready', async ()=>{
     logger.print('Bot is up and running');
+    if(debug) {
+        logger.print('Bot isrunning in debug mode! All prefix are fixed to *');
+    }
     const calendarEvents = botClient.modules.get('calendar-events');
     const allGuilds = await botClient.guilds.cache;
     allGuilds.forEach(guild=>{
@@ -81,7 +86,6 @@ botClient.on('ready', async ()=>{
 
 // On message
 botClient.on('message', async msg=>{
-
     if(msg.channel == 'bango') {
         msg.reply('Bango');
     }
@@ -93,7 +97,7 @@ botClient.on('message', async msg=>{
     const member = msg.member;
     const userPermissions = botClient.modules.get('user-permissions');
     const guildConfigs = botClient.modules.get('guilds-config');
-    const guildPrefix = guildConfigs.getGuildConfigKey(guild.id, 'prefix');
+    const guildPrefix = debug ? '*' : guildConfigs.getGuildConfigKey(guild.id, 'prefix');
     const guildChannels = guildConfigs.getGuildConfigKey(guild.id, 'channels');
     // If pinged
     if(msg.mentions.members.some(m=>m.user.id == botClient.user.id)) {
@@ -135,10 +139,11 @@ botClient.on('message', async msg=>{
                 errorEmbed.setTitle('Parser error');
                 errorEmbed.setTimestamp(new Date());
                 errorEmbed.setColor('#ff5b0f');
-                errorEmbed.setDescription('Error ocurred while parsing your command:\n\r ' +
+                errorEmbed.setDescription('Error occurred while parsing your command:\n\r ' +
                 error.message);
                 errorEmbed.setAuthor(botClient.user.tag);
                 errorEmbed.setThumbnail('https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-error-icon.png');
+                errorEmbed.setURL('https://github.com/MysterJacob/BodzioBot/blob/main/BASICS.md');
                 const problematicArgumet = args[error.index] || '   ';
                 let pointer = '';
                 for(let i = 1;i < content.indexOf(problematicArgumet);i++) {

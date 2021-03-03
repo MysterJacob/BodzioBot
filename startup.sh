@@ -1,3 +1,3 @@
 echo Starting the bot
-nodemon . 
+nodemon . -debug
 # /opt/discordBots/Botdzio/service-run.sh 

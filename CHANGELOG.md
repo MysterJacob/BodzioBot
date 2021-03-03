@@ -1,4 +1,10 @@
 # CHANGELOG
+## 03/03/2021 - Wen - Version 0.9.0 - Settings update!
+- Settings can be changed
+- Added manual: https://github.com/MysterJacob/BodzioBot/blob/main/BASICS.md
+- Character can be now escaped
+- Changes in command-parser, new types role and channel
+- Added debug mode
 ## 02/03/2021 - Thu - Version 0.8.3 - Reputation patch
 - Cooldown actually works 
 ## 01/03/2021 - Monday - Version 0.8.2 - Reputation patch
