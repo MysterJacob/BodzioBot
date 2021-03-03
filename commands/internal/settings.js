@@ -102,7 +102,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'settings',
     desc:'Used to set, get, reset guild config/settings',
-    permissions:'101011',
+    permissions:'001011',
     parameters:[{ name:'parameter', type:'string', optional:true }, { name:'value', type:'string', optional:true }],
     flags:{},
 };
