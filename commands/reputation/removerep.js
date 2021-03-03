@@ -12,7 +12,7 @@ module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
         return ret;
     }
     const lris = userData.getUserConfigKey(giver.id, 'lastReputationInteraction');
-    const lastReputationInteraction = lris != '' ? Date.parse(lris) : 100000000000;
+    const lastReputationInteraction = lris != '' ? Date.parse(lris) : 0;
     // Stack overflow (STOLEN CODE HERE)
     const diffMs = now.getTime() - lastReputationInteraction;
     const diffMins = Math.abs(Math.round(((diffMs % 86400000) % 3600000) / 60000)); // minutes
