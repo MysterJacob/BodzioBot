@@ -28,7 +28,7 @@ module.exports.getRanking = (places, guild, bot) =>{
         }
         sorted.push(last);
         buffer.splice(buffer.indexOf(last), 1);
-        if(sorted.length > places + 1) {
+        if(sorted.length >= places) {
             break;
         }
     }
