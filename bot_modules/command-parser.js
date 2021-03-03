@@ -240,28 +240,27 @@ module.exports.parse = async (aParameters, aFlags, args, guild)=>{
     let Input = [];
     let argBuffer = '';
     let quoteOpen = false;
+    let lastChar = '';
     for(let i = 0;i < args.length;i++) {
         const char = args.charAt(i);
-
-        switch(char) {
-        case '"':
+        if(char == '"' && lastChar != '\\') {
             quoteOpen = !quoteOpen;
             if(!quoteOpen) {
                 Input.push(argBuffer);
                 argBuffer = '';
             }
-            break;
-        case ' ':
+        }
+        else if (char == ' ') {
             argBuffer += char;
             if(!quoteOpen) {
                 Input.push(argBuffer.replace(' ', ''));
                 argBuffer = '';
             }
-            break;
-        default:
-            argBuffer += char;
-            break;
         }
+        else{
+            argBuffer += char;
+        }
+        lastChar = char;
     }
     // In case of error, juts flush
     if(argBuffer != '') {
