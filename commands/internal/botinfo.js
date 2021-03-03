@@ -9,6 +9,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     infoEmbed.addField('Author', 'Myster#7218', true);
     infoEmbed.addField('Data publikacji', '26.02.2021 20:00');
     infoEmbed.addField('Wersja discord.js', discord.version);
+    infoEmbed.addField(' Poradnik? ', 'https://github.com/MysterJacob/BodzioBot/blob/main/BASICS.md');
     infoEmbed.setTimestamp(new Date());
     msg.reply(infoEmbed);
     return ret;
