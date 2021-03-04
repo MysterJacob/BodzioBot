@@ -15,7 +15,7 @@ module.exports.run = (msg, Flags, Parameters, bot, ret)=>{
     const lastReputationInteraction = lris != '' ? Date.parse(lris) : 0;
     // Stack overflow (STOLEN CODE HERE)
     const diffMs = now.getTime() - lastReputationInteraction;
-    const diffMins = Math.abs(diffMs / (1000 * 60)); // minutes
+    const diffMins = Math.round(Math.abs(diffMs / (1000 * 60))); // minutes
 
     if(diffMins < 30) {
         const embed = new discord.MessageEmbed();
