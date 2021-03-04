@@ -15,7 +15,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
     const lastReputationInteraction = lris != '' ? Date.parse(lris) : 0;
     // Stack overflow (STOLEN CODE HERE)
     const diffMs = now.getTime() - lastReputationInteraction;
-    const diffMins = Math.abs(Math.round(((diffMs % 86400000) % 3600000) / 60000)); // minutes
+    const diffMins = Math.abs(diffMs / (1000 * 60)); // minutes
     if(diffMins < 30) {
         const embed = new discord.MessageEmbed();
         embed.setAuthor('You need to wait more time');
