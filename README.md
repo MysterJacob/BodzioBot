@@ -24,9 +24,9 @@ It has(will have) basic implementation of modules for basic task:
 ## Planned
 ## WIP 
 - Quotes(OTD)
-- Settings
 ## DONE
-- Calendar Events(didn't test, nvm tested)
+- Settings
+- Calendar Events(~~didn't test~~ ~~nvm, tested~~ ~~didn't work out~~ working)
 - CrateTask
 - Ping
 - Perms

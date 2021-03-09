@@ -99,6 +99,9 @@ botClient.on('message', async msg=>{
     const guildConfigs = botClient.modules.get('guilds-config');
     const guildPrefix = debug ? '*' : guildConfigs.getGuildConfigKey(guild.id, 'prefix');
     const guildChannels = guildConfigs.getGuildConfigKey(guild.id, 'channels');
+    const deleteCommands = guildConfigs.getGuildConfigKey(guild.id, 'deleteCommands') == true;
+    const showNoPermissions = guildConfigs.getGuildConfigKey(guild.id, 'hideNoPermissionss') == false;
+    const showUnknownCommand = guildConfigs.getGuildConfigKey(guild.id, 'hideUnknownCommand') == false;
     // If pinged
     if(msg.mentions.members.some(m=>m.user.id == botClient.user.id)) {
         msg.reply(`You stupid, my prefix is \`\`${guildPrefix}\`\` here.`);
@@ -120,7 +123,9 @@ botClient.on('message', async msg=>{
         logger.print(`${author.tag} requested executing command ${commandName}`);
         const command = botClient.commands.get(commandName);
         if(command == undefined) {
-            msg.reply(`No command named \`\`${commandName}\`\``);
+            if(showUnknownCommand) {
+                msg.reply(`No command named \`\`${commandName}\`\``);
+            }
             logger.print(`${author.tag} failed to execute command ${commandName}`);
         }
         else{
@@ -177,6 +182,9 @@ botClient.on('message', async msg=>{
                             errorEmbed.setAuthor(botClient.user.tag);
                             channel.send(errorEmbed);
                         }
+                        if(deleteCommands) {
+                            msg.delete();
+                        }
                     }
                     catch(e) {
                         const errorEmbed = new discord.MessageEmbed();
@@ -192,7 +200,7 @@ botClient.on('message', async msg=>{
                     }
 
                 }
-                else{
+                else if(showNoPermissions) {
                     logger.print(`Command ${commandName} not run, user ${author.tag} doesn't have permissions!`);
                     msg.reply('You have no valid permissions to do that!');
                 }

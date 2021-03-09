@@ -1,5 +1,8 @@
 {
     "prefix":"-",
+    "hideUnknownCommand":true,
+    "hideNoPermissionss":false,
+    "deleteCommands":true,
     "channels":{
         "meetingLinks":"",
         "school":{}

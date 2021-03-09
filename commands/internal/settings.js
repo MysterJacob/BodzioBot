@@ -24,7 +24,15 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const moderatorRole = guildRoles.moderator != '' ? fetchedRoles.cache.get(guildRoles.moderator) : 'not set';
         const roles = `Moderator: ${moderatorRole}`;
         infoEmbed.addField('Roles', roles);
-
+        // Remove Commands
+        const deleteCommands = guildConfig.deleteCommands;
+        infoEmbed.addField('Delete Commands', deleteCommands ? ':white_check_mark:' : ':x:', true);
+        // Announce Unknown Command
+        const announceUnknownCommand = guildConfig.hideUnknownCommand == false;
+        infoEmbed.addField('Announce Unknown Command', announceUnknownCommand ? ':white_check_mark:' : ':x:', true);
+        // Announce No Permissions
+        const hideNoPermissionss = guildConfig.hideNoPermissionss == false;
+        infoEmbed.addField('Announce No Permissions', hideNoPermissionss ? ':white_check_mark:' : ':x:', true);
         msg.reply(infoEmbed);
     }
     else{
@@ -85,6 +93,54 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
                 msg.reply(`The ${parameter} for this guild is \`\`${OldCLinksChannel}`);
             }
             break;
+        case 'delete-commands':
+            let deleteCommands = guildConfig['deleteCommands'] == true;
+            if(value) {
+                if(value == 'on' || value == 'off') {
+                    deleteCommands = value == 'on';
+                    guildsConfig.setGuildConfigKey(guild.id, 'deleteCommands', deleteCommands);
+                    msg.reply(`Changed delete-commands from \`\`${deleteCommands}\`\` to \`\`${value == 'on'}\`\``);
+                }
+                else{
+                    msg.reply('Type ``on`` to enable and ``off`` to disable');
+                }
+            }
+            else{
+                msg.reply(`The ${parameter} for this guild is \`\`${deleteCommands}\`\``);
+            }
+            break;
+        case 'announce-unknown-command':
+            let announceUnknownCommand = guildConfig['hideUnknownCommand'] == false;
+            if(value) {
+                if(value == 'on' || value == 'off') {
+                    announceUnknownCommand = value == 'off';
+                    guildsConfig.setGuildConfigKey(guild.id, 'hideUnknownCommand', announceUnknownCommand);
+                    msg.reply(`Changed announce-unknown-command from \`\`${announceUnknownCommand}\`\` to \`\`${value == 'on'}\`\``);
+                }
+                else{
+                    msg.reply('Type ``on`` to enable and ``off`` to disable');
+                }
+            }
+            else{
+                msg.reply(`The ${parameter} for this guild is \`\`${announceUnknownCommand}\`\``);
+            }
+            break;
+        case 'announce-no-permissions':
+            let announceNoPermissions = guildConfig['hideNoPermissionss'] == false;
+            if(value) {
+                if(value == 'on' || value == 'off') {
+                    announceNoPermissions = value == 'off';
+                    guildsConfig.setGuildConfigKey(guild.id, 'hideUnknownCommand', announceNoPermissions);
+                    msg.reply(`Changed announce-no-permissions from \`\`${announceNoPermissions}\`\` to \`\`${value == 'on'}\`\``);
+                }
+                else{
+                    msg.reply('Type ``on`` to enable and ``off`` to disable');
+                }
+            }
+            else{
+                msg.reply(`The ${parameter} for this guild is \`\`${announceNoPermissions}\`\``);
+            }
+            break;
         default:
             const infoEmbed = new discord.MessageEmbed();
             infoEmbed.setTitle(`No parameter named ${parameter}`);
@@ -93,6 +149,9 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
             infoEmbed.addField('prefix', 'string');
             infoEmbed.addField('moderator-role', 'role');
             infoEmbed.addField('clinks-channel', 'channel');
+            infoEmbed.addField('announce-unknown-command', 'boolean');
+            infoEmbed.addField('announce-no-permissions', 'boolean');
+            infoEmbed.addField('delete-commands', 'boolean');
             msg.reply(infoEmbed);
             break;
         }

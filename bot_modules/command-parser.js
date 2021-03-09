@@ -18,7 +18,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         parsed.output = numb;
         break;
     case 'member':
-        if(Input.match('^(\d{18})')) {
+        if(Input.match('^[0-9]{18}') != null) {
             // By id
             try{
                 const member = await guild.members.fetch(Input);
@@ -56,7 +56,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         }
         break;
     case 'role':
-        if(Input.match('^(\d{18})')) {
+        if(Input.match('^[0-9]{18}') != null) {
             const role = await guild.roles.fetch(Input);
             if(role != undefined) {
                 parsed.output = role;
@@ -92,7 +92,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         }
         break;
     case 'channel':
-        if(Input.match('^(\d{18})')) {
+        if(Input.match('^[0-9]{18}') != null) {
             const channel = await guild.channels.cache.find(ch=>ch.id == Input);
             if(channel != undefined) {
                 parsed.output = channel;

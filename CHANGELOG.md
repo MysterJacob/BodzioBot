@@ -1,4 +1,9 @@
 # CHANGELOG
+## 12/03/2021 - Fri - Version 1.0.0 - Offical release
+- Timers command
+- Fixed parser
+- 'No command found' repsonse can be now turned off
+- Bot now removes commands(can be truned off)
 ## 03/03/2021 - Wen - Version 0.9.1 - escape patch
 - Double quote can now be escaped
 ## 03/03/2021 - Wen - Version 0.9.0 - Settings update!

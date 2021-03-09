@@ -26,7 +26,6 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const days = parseInt((endDate - now) / (1000 * 60 * 60 * 24));
         const hours = parseInt(Math.abs(endDate - now) / (1000 * 60 * 60) % 24);
         const minutes = parseInt(Math.abs(endDate.getTime() - now.getTime()) / (1000 * 60) % 60);
-        const seconds = parseInt(Math.abs(endDate.getTime() - now.getTime()) / (1000) % 60);
         const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const formattedDate = `Date: ${endDate.getFullYear()}/${endDate.getMonth()}/${endDate.getDate()}(${daysOfTheWeek[endDate.getDay()]}) ${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`;
         const formattedTimeToEvent = `Time left: ${days} days, ${hours} hours, ${minutes} minutes`;
