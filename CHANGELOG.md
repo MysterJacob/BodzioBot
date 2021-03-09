@@ -1,5 +1,5 @@
 # CHANGELOG
-## 12/03/2021 - Fri - Version 1.0.0 - Offical release
+## 12/03/2021 - Fri - Version 0.9.9 - T.HANKS
 - Timers command
 - Fixed parser
 - 'No command found' repsonse can be now turned off

@@ -20,7 +20,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const d = Math.floor(h / 24);
         h = h % 24;
         const string = `${d} day${d != 1 ? 's' : ''}, ${h} hour${h != 1 ? 's' : ''}, ${m} minute${m != 1 ? 's' : ''} and ${s} second${s != 1 ? 's' : ''}`;
-        embed.addField('To weekend', string);
+        embed.addField('The weekend', string);
     }
     {
         const endDay = now.getDate() - (now.getDay() - 6);
@@ -36,7 +36,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const d = Math.floor(h / 24);
         h = h % 24;
         const string = `${d} day${d != 1 ? 's' : ''}, ${h} hour${h != 1 ? 's' : ''}, ${m} minute${m != 1 ? 's' : ''} and ${s} second${s != 1 ? 's' : ''}`;
-        embed.addField('End of week', string);
+        embed.addField('End of the week', string);
     }
     {
         const end = new Date(now.getTime());
@@ -50,7 +50,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const d = Math.floor(h / 24);
         h = h % 24;
         const string = `${d} day${d != 1 ? 's' : ''}, ${h} hour${h != 1 ? 's' : ''}, ${m} minute${m != 1 ? 's' : ''} and ${s} second${s != 1 ? 's' : ''}`;
-        embed.addField('End of daye', string);
+        embed.addField('End of the daye', string);
     }
     {
         const end = new Date(now.getTime());
@@ -80,7 +80,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
         const d = Math.floor(h / 24);
         h = h % 24;
         const string = `${d} day${d != 1 ? 's' : ''}, ${h} hour${h != 1 ? 's' : ''}, ${m} minute${m != 1 ? 's' : ''} and ${s} second${s != 1 ? 's' : ''}`;
-        embed.addField('Wakacje', string);
+        embed.addField('The Wakacje', string);
     }
     {
         const end = new Date(now.getTime());
