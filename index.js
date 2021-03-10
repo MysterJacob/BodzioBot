@@ -11,6 +11,7 @@ const botClient = new discord.Client({ ws: { intents: intents } });
 // Config.json
 const config = JSON.parse(fs.readFileSync('./config.json'));
 botClient.config = config;
+botClient.debug = debug;
 // Load modules
 function loadModules() {
     botClient.modules = new discord.Collection();
@@ -82,7 +83,7 @@ botClient.on('ready', async ()=>{
         }
     });
     if(debug) {
-        logger.print('Bot isrunning in debug mode! All prefix are fixed to *');
+        logger.print('Bot is running in debug mode! All prefix are fixed to *');
     }
     const calendarEvents = botClient.modules.get('calendar-events');
     const allGuilds = await botClient.guilds.cache;
