@@ -44,7 +44,7 @@ module.exports.getRandom = () => {
     if(quotes.length == 0) {
         return { author:'Bagno.', value:'Ruh moment' };
     }
-    const randomIndex = Math.round(Math.random()) * (quotes.length - 1);
+    const randomIndex = Math.round(Math.random() * (quotes.length - 1));
     const randomQuote = quotes[randomIndex];
     return randomQuote;
 };
