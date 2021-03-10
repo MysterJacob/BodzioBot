@@ -30,7 +30,7 @@ module.exports.run = async (msg, Flags, Parameters, bot, ret)=>{
 module.exports.config = {
     name:'quote',
     desc:'Adds quote!',
-    permissions:'000001',
+    permissions:'1111111',
     parameters:[{ name:'author', type:'string', optional:false }, { name:'quote', type:'string', optional:false }],
     flags:{},
 };
