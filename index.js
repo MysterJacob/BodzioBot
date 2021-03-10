@@ -67,13 +67,20 @@ function loadCommands() {
     });
 }
 
-// Bot events
 loadModules();
 loadCommands();
 
 // On ready
 botClient.on('ready', async ()=>{
+    // Bot events
+
     logger.print('Bot is up and running');
+    botClient.modules.forEach(module=>{
+        if(module.init != undefined) {
+            logger.print('Initialized module ' + module.config.name);
+            module.init(botClient);
+        }
+    });
     if(debug) {
         logger.print('Bot isrunning in debug mode! All prefix are fixed to *');
     }

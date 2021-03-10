@@ -68,7 +68,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         }
         else if(Input.startsWith('<@&')) {
             const roleID = Input.slice(3, 21);
-            console.log(roleID);
+            // console.log(roleID);
             const roles = await guild.roles.fetch();
             const role = roles.cache.find(m=>m.id == roleID);
             if(role != undefined) {
@@ -104,7 +104,7 @@ module.exports.parseArgument = async (type, Input, guild)=>{
         }
         else if(Input.startsWith('<#')) {
             const channelID = Input.slice(2, 20);
-            console.log(channelID);
+            // console.log(channelID);
             const channel = await guild.channels.cache.find(ch=>ch.id == channelID);
             if(channel != undefined) {
                 parsed.output = channel;
